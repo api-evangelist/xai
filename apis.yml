@@ -30,6 +30,8 @@ apis:
         type: Documentation
       - url: https://docs.x.ai/docs/api-reference#chat-completions
         type: API Reference
+      - url: openapi/xai-openapi.json
+        type: OpenAPI
     description: >-
       Generates conversational completions using Grok foundation models, including multi-turn conversations, function calling, structured outputs, and reasoning. OpenAI-compatible Chat Completions interface.
   - aid: xai:xai-responses-api
@@ -45,6 +47,8 @@ apis:
     properties:
       - url: https://docs.x.ai/docs/api-reference#responses
         type: Documentation
+      - url: openapi/xai-openapi.json
+        type: OpenAPI
     description: >-
       The Responses API supports text generation, multi-turn conversations, reasoning, tool/function calling, and built-in tools (Live Search, code execution).
   - aid: xai:xai-images-api
@@ -61,6 +65,8 @@ apis:
         type: Documentation
       - url: https://docs.x.ai/docs/api-reference#image-generations
         type: API Reference
+      - url: openapi/xai-openapi.json
+        type: OpenAPI
     description: >-
       Generates images from text prompts using the Grok Imagine image models. OpenAI-compatible image generation endpoint.
   - aid: xai:xai-video-generation-api
@@ -75,6 +81,8 @@ apis:
     properties:
       - url: https://docs.x.ai/docs/guides/video-generation
         type: Documentation
+      - url: openapi/xai-openapi.json
+        type: OpenAPI
     description: >-
       Generates video from text or image inputs using the Grok Imagine video models, with editing and detailed control options.
   - aid: xai:xai-voice-api
@@ -90,6 +98,8 @@ apis:
     properties:
       - url: https://docs.x.ai/docs/guides/voice
         type: Documentation
+      - url: openapi/xai-openapi.json
+        type: OpenAPI
     description: >-
       Realtime voice API supporting speech-to-text, text-to-speech, and bidirectional realtime voice interaction with Grok.
   - aid: xai:xai-embeddings-api
@@ -103,6 +113,8 @@ apis:
     properties:
       - url: https://docs.x.ai/docs/guides/embeddings
         type: Documentation
+      - url: openapi/xai-openapi.json
+        type: OpenAPI
     description: >-
       Generates vector embeddings of text and other inputs for retrieval, classification, and semantic search workflows.
   - aid: xai:xai-models-api
@@ -116,6 +128,8 @@ apis:
     properties:
       - url: https://docs.x.ai/docs/api-reference#models
         type: Documentation
+      - url: openapi/xai-openapi.json
+        type: OpenAPI
     description: >-
       Lists available Grok models, model capabilities, context windows, and metadata.
   - aid: xai:xai-batch-api
@@ -129,6 +143,8 @@ apis:
     properties:
       - url: https://docs.x.ai/docs/guides/batch
         type: Documentation
+      - url: openapi/xai-openapi.json
+        type: OpenAPI
     description: >-
       Submits offline batch jobs of chat or embedding requests at a discount (20-50% off standard rates), with results returned out-of-band. Batch requests do not count toward rate limits.
 common:
