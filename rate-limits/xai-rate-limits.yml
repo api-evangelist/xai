@@ -15,22 +15,40 @@ tags:
 - Rate Limiting
 - Quotas
 - Throttling
-description: Placeholder rate-limit artifact for xAI. Replace with real limits once the pipeline
-  researches the provider's rate-limit documentation.
-notes: Initial scaffold — limits have not yet been reconciled against the provider's documentation.
+description: >-
+  xAI enforces per-team rate limits on the synchronous API (requests per minute
+  and tokens per minute) that vary by model and account tier. The Batch API does
+  not count toward synchronous rate limits. Specific per-model limits are not
+  reconciled in this artifact; consult the xAI Console for the active limits on
+  your team.
+notes: >-
+  Pending reconciliation of per-model RPM/TPM/IPM/IPD limits per usage tier.
 sources:
-- https://x.ai/
+- https://docs.x.ai/docs/models
+- https://console.x.ai/team/default/models
 responseCodes:
   throttled: 429
 limits:
-- name: Default
-  scope: account
-  metric: varies
+- name: Requests Per Minute (RPM)
+  scope: team
+  metric: requests
   limit: see provider documentation
-  notes: Pending reconciliation.
+  notes: Per-model RPM, varies by tier and model. Pending reconciliation.
+- name: Tokens Per Minute (TPM)
+  scope: team
+  metric: tokens
+  limit: see provider documentation
+  notes: Per-model TPM, varies by tier and model. Pending reconciliation.
+- name: Batch API
+  scope: team
+  metric: requests
+  limit: not counted against synchronous limits
+  notes: Batch jobs run asynchronously and do not consume synchronous RPM/TPM.
 policies:
 - name: Backoff Strategy
   description: Clients should implement exponential backoff with jitter and honor any Retry-After header.
+- name: Tiered Limits
+  description: Higher usage tiers and enterprise agreements unlock higher per-minute limits.
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com

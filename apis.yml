@@ -3,7 +3,7 @@ url: https://raw.githubusercontent.com/api-evangelist/xai/refs/heads/main/apis.y
 name: xAI
 x-type: company
 description: >-
-  xAI is an AI research lab founded by Elon Musk. The xAI API exposes Grok foundation models for chat, function calling, vision, and image generation, alongside research outputs from the Colossus training supercluster.
+  xAI is an AI research lab founded by Elon Musk. The xAI API exposes Grok foundation models for chat, function calling, vision, voice, image generation, and video generation, alongside research outputs from the Colossus training supercluster.
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 tags:
   - AI
@@ -14,10 +14,128 @@ tags:
 created: '2026-05-08'
 modified: '2026-05-08'
 specificationVersion: '0.19'
-apis: []
+apis:
+  - aid: xai:xai-chat-completions-api
+    name: xAI Chat Completions API
+    tags:
+      - Chat
+      - Completions
+      - LLM
+      - Grok
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://docs.x.ai/docs/api-reference
+    baseURL: https://api.x.ai/v1
+    properties:
+      - url: https://docs.x.ai/docs/overview
+        type: Documentation
+      - url: https://docs.x.ai/docs/api-reference#chat-completions
+        type: API Reference
+    description: >-
+      Generates conversational completions using Grok foundation models, including multi-turn conversations, function calling, structured outputs, and reasoning. OpenAI-compatible Chat Completions interface.
+  - aid: xai:xai-responses-api
+    name: xAI Responses API
+    tags:
+      - Responses
+      - LLM
+      - Grok
+      - Reasoning
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://docs.x.ai/docs/api-reference
+    baseURL: https://api.x.ai/v1
+    properties:
+      - url: https://docs.x.ai/docs/api-reference#responses
+        type: Documentation
+    description: >-
+      The Responses API supports text generation, multi-turn conversations, reasoning, tool/function calling, and built-in tools (Live Search, code execution).
+  - aid: xai:xai-images-api
+    name: xAI Images API
+    tags:
+      - Images
+      - Generation
+      - Multimodal
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://docs.x.ai/docs/api-reference
+    baseURL: https://api.x.ai/v1
+    properties:
+      - url: https://docs.x.ai/docs/guides/image-generations
+        type: Documentation
+      - url: https://docs.x.ai/docs/api-reference#image-generations
+        type: API Reference
+    description: >-
+      Generates images from text prompts using the Grok Imagine image models. OpenAI-compatible image generation endpoint.
+  - aid: xai:xai-video-generation-api
+    name: xAI Video Generation API
+    tags:
+      - Video
+      - Generation
+      - Multimodal
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://docs.x.ai/docs/api-reference
+    baseURL: https://api.x.ai/v1
+    properties:
+      - url: https://docs.x.ai/docs/guides/video-generation
+        type: Documentation
+    description: >-
+      Generates video from text or image inputs using the Grok Imagine video models, with editing and detailed control options.
+  - aid: xai:xai-voice-api
+    name: xAI Voice API
+    tags:
+      - Voice
+      - Speech
+      - Audio
+      - Realtime
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://docs.x.ai/docs/api-reference
+    baseURL: https://api.x.ai/v1
+    properties:
+      - url: https://docs.x.ai/docs/guides/voice
+        type: Documentation
+    description: >-
+      Realtime voice API supporting speech-to-text, text-to-speech, and bidirectional realtime voice interaction with Grok.
+  - aid: xai:xai-embeddings-api
+    name: xAI Embeddings API
+    tags:
+      - Embeddings
+      - Vector
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://docs.x.ai/docs/api-reference
+    baseURL: https://api.x.ai/v1
+    properties:
+      - url: https://docs.x.ai/docs/guides/embeddings
+        type: Documentation
+    description: >-
+      Generates vector embeddings of text and other inputs for retrieval, classification, and semantic search workflows.
+  - aid: xai:xai-models-api
+    name: xAI Models API
+    tags:
+      - Models
+      - Catalog
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://docs.x.ai/docs/api-reference
+    baseURL: https://api.x.ai/v1
+    properties:
+      - url: https://docs.x.ai/docs/api-reference#models
+        type: Documentation
+    description: >-
+      Lists available Grok models, model capabilities, context windows, and metadata.
+  - aid: xai:xai-batch-api
+    name: xAI Batch API
+    tags:
+      - Batch
+      - Async
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://docs.x.ai/docs/api-reference
+    baseURL: https://api.x.ai/v1
+    properties:
+      - url: https://docs.x.ai/docs/guides/batch
+        type: Documentation
+    description: >-
+      Submits offline batch jobs of chat or embedding requests at a discount (20-50% off standard rates), with results returned out-of-band. Batch requests do not count toward rate limits.
 common:
   - type: Website
     url: https://x.ai/
+  - type: Documentation
+    url: https://docs.x.ai/
   - type: Plans
     url: plans/xai-plans-pricing.yml
   - type: RateLimits
