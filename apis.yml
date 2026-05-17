@@ -1,7 +1,7 @@
 aid: xai
 url: https://raw.githubusercontent.com/api-evangelist/xai/refs/heads/main/apis.yml
 name: xAI
-x-type: company
+kind: company
 description: >-
   xAI is an AI research lab founded by Elon Musk. The xAI API exposes Grok foundation models for chat, function calling, vision, voice, image generation, and video generation, alongside research outputs from the Colossus training supercluster.
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
@@ -29,7 +29,7 @@ apis:
       - url: https://docs.x.ai/docs/overview
         type: Documentation
       - url: https://docs.x.ai/docs/api-reference#chat-completions
-        type: API Reference
+        type: APIReference
       - url: openapi/xai-openapi.json
         type: OpenAPI
     description: >-
@@ -64,7 +64,7 @@ apis:
       - url: https://docs.x.ai/docs/guides/image-generations
         type: Documentation
       - url: https://docs.x.ai/docs/api-reference#image-generations
-        type: API Reference
+        type: APIReference
       - url: openapi/xai-openapi.json
         type: OpenAPI
     description: >-
