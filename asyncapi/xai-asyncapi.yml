@@ -1,0 +1,697 @@
+asyncapi: 2.6.0
+info:
+  title: xAI Realtime WebSocket APIs
+  version: '1.0.0'
+  description: |
+    AsyncAPI 2.6 description of xAI's documented WebSocket APIs:
+      - Real-time Speech-to-Text (STT) streaming at wss://api.x.ai/v1/stt
+      - Voice Agent (bidirectional speech-to-speech) at wss://api.x.ai/v1/realtime
+    Every channel, message, and field below is sourced from the public xAI
+    developer documentation at https://docs.x.ai/. No events have been
+    invented; events that are unsupported (per the docs) are excluded.
+  contact:
+    name: xAI
+    url: https://docs.x.ai/
+  license:
+    name: Proprietary
+    url: https://x.ai/legal/terms-of-service
+  externalDocs:
+    description: xAI Audio / Voice documentation
+    url: https://docs.x.ai/developers/model-capabilities/audio/voice
+
+defaultContentType: application/json
+
+servers:
+  stt:
+    url: api.x.ai/v1/stt
+    protocol: wss
+    description: |
+      Real-time Speech-to-Text streaming endpoint. Configuration is supplied
+      via URL query parameters (no setup message is required). Authenticate
+      with a Bearer token in the Authorization header (or an ephemeral token).
+      Source: https://docs.x.ai/developers/model-capabilities/audio/speech-to-text
+    variables:
+      sample_rate:
+        description: Audio sample rate in Hz. Supported values include 8000, 16000, 22050, 24000, 44100, 48000.
+        default: '16000'
+        enum:
+          - '8000'
+          - '16000'
+          - '22050'
+          - '24000'
+          - '44100'
+          - '48000'
+      encoding:
+        description: Raw audio encoding (raw formats only).
+        default: pcm
+        enum:
+          - pcm
+          - mulaw
+          - alaw
+      interim_results:
+        description: Emit interim (partial) transcripts approximately every 500ms.
+        default: 'false'
+        enum:
+          - 'true'
+          - 'false'
+      endpointing:
+        description: Silence duration in milliseconds (0-5000) that triggers an utterance-final event.
+        default: '0'
+      multichannel:
+        description: Enable independent per-channel transcription.
+        default: 'false'
+        enum:
+          - 'true'
+          - 'false'
+      channels:
+        description: Number of channels when multichannel=true (2-8).
+        default: '2'
+    security:
+      - bearerAuth: []
+  realtime:
+    url: api.x.ai/v1/realtime
+    protocol: wss
+    description: |
+      Voice Agent realtime endpoint (bidirectional speech-to-speech, OpenAI
+      Realtime API compatible using beta event naming). The target model is
+      selected with the `model` query parameter (e.g. grok-voice-latest).
+      Source: https://docs.x.ai/developers/model-capabilities/audio/voice-agent
+    variables:
+      model:
+        description: Voice model identifier.
+        default: grok-voice-latest
+    security:
+      - bearerAuth: []
+
+channels:
+  # ---------------------------------------------------------------------
+  # Real-time STT channels (wss://api.x.ai/v1/stt)
+  # ---------------------------------------------------------------------
+  stt/audio:
+    description: |
+      Client streams audio to the STT server. Audio is sent as binary
+      WebSocket frames containing raw PCM (16-bit signed little-endian),
+      mu-law, or A-law samples matching the `encoding` query parameter.
+      Recommended chunk size for 16 kHz PCM is ~100 ms (3,200 bytes).
+    servers:
+      - stt
+    publish:
+      operationId: sttSendAudioChunk
+      summary: Stream a chunk of raw audio to the STT engine.
+      message:
+        $ref: '#/components/messages/SttAudioChunk'
+
+  stt/control:
+    description: |
+      Client signals end-of-audio. After the server emits transcript.done,
+      the connection is closed.
+    servers:
+      - stt
+    publish:
+      operationId: sttSendAudioDone
+      summary: Signal that no more audio will be sent.
+      message:
+        $ref: '#/components/messages/SttAudioDone'
+
+  stt/events:
+    description: |
+      Server-to-client transcription events for the STT session.
+    servers:
+      - stt
+    subscribe:
+      operationId: sttReceiveEvents
+      summary: Receive STT lifecycle, transcript, and error events.
+      message:
+        oneOf:
+          - $ref: '#/components/messages/SttTranscriptCreated'
+          - $ref: '#/components/messages/SttTranscriptPartial'
+          - $ref: '#/components/messages/SttTranscriptDone'
+          - $ref: '#/components/messages/SttError'
+
+  # ---------------------------------------------------------------------
+  # Voice Agent channels (wss://api.x.ai/v1/realtime)
+  # ---------------------------------------------------------------------
+  realtime/client:
+    description: |
+      Client-to-server events for the voice agent: session configuration,
+      conversation item creation, response requests, and input audio
+      buffer management.
+    servers:
+      - realtime
+    publish:
+      operationId: realtimeSendClientEvent
+      summary: Send a client event to the voice agent.
+      message:
+        oneOf:
+          - $ref: '#/components/messages/RtSessionUpdate'
+          - $ref: '#/components/messages/RtConversationItemCreate'
+          - $ref: '#/components/messages/RtResponseCreate'
+          - $ref: '#/components/messages/RtInputAudioBufferAppend'
+          - $ref: '#/components/messages/RtInputAudioBufferCommit'
+          - $ref: '#/components/messages/RtInputAudioBufferClear'
+
+  realtime/server:
+    description: |
+      Server-to-client events for the voice agent: session lifecycle,
+      conversation item events, response streaming (text + audio),
+      transcription of user input, function-call argument completion,
+      and error events.
+    servers:
+      - realtime
+    subscribe:
+      operationId: realtimeReceiveServerEvent
+      summary: Receive a server event from the voice agent.
+      message:
+        oneOf:
+          - $ref: '#/components/messages/RtSessionCreated'
+          - $ref: '#/components/messages/RtSessionUpdated'
+          - $ref: '#/components/messages/RtConversationItemCreated'
+          - $ref: '#/components/messages/RtInputAudioTranscriptionCompleted'
+          - $ref: '#/components/messages/RtResponseCreated'
+          - $ref: '#/components/messages/RtResponseDone'
+          - $ref: '#/components/messages/RtResponseOutputTextDelta'
+          - $ref: '#/components/messages/RtResponseOutputAudioDelta'
+          - $ref: '#/components/messages/RtResponseFunctionCallArgumentsDone'
+          - $ref: '#/components/messages/RtError'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: API key (or ephemeral token)
+      description: |
+        Pass `Authorization: Bearer <XAI_API_KEY>` on the WebSocket upgrade
+        request. xAI recommends proxying WebSocket connections through your
+        backend and never exposing the key client-side.
+
+  messages:
+    # -----------------------------------------------------------------
+    # STT messages
+    # -----------------------------------------------------------------
+    SttAudioChunk:
+      name: SttAudioChunk
+      title: STT raw audio chunk (binary frame)
+      summary: A binary WebSocket frame carrying raw audio samples.
+      contentType: application/octet-stream
+      payload:
+        type: string
+        format: binary
+        description: |
+          Raw audio bytes. Encoding is determined by the `encoding` query
+          parameter (pcm = signed 16-bit little-endian, mulaw = G.711 mu-law,
+          alaw = G.711 A-law). Sample rate is set by `sample_rate`.
+
+    SttAudioDone:
+      name: SttAudioDone
+      title: audio.done
+      summary: Client signal that no more audio will be sent.
+      payload:
+        type: object
+        required: [type]
+        properties:
+          type:
+            type: string
+            const: audio.done
+
+    SttTranscriptCreated:
+      name: SttTranscriptCreated
+      title: transcript.created
+      summary: Emitted once when the STT session is ready.
+      payload:
+        type: object
+        required: [type]
+        properties:
+          type:
+            type: string
+            const: transcript.created
+
+    SttTranscriptPartial:
+      name: SttTranscriptPartial
+      title: transcript.partial
+      summary: Intermediate transcript event (interim or chunk-final).
+      payload:
+        type: object
+        required: [type, text, is_final, speech_final]
+        properties:
+          type:
+            type: string
+            const: transcript.partial
+          text:
+            type: string
+            description: Partial transcript text.
+          words:
+            type: array
+            description: Word-level segments.
+            items:
+              $ref: '#/components/schemas/Word'
+          is_final:
+            type: boolean
+            description: |
+              When true the text for this chunk is locked (no further changes).
+          speech_final:
+            type: boolean
+            description: |
+              When true the utterance has ended (e.g. silence threshold met).
+              States:
+                - is_final=false, speech_final=false: interim text (may change)
+                - is_final=true,  speech_final=false: chunk-final (~3s locked)
+                - is_final=true,  speech_final=true:  complete utterance
+          start:
+            type: number
+            description: Start time in seconds for the partial segment.
+          duration:
+            type: number
+            description: Duration in seconds for the partial segment.
+          channel_index:
+            type: integer
+            description: Channel index (only present when multichannel=true).
+
+    SttTranscriptDone:
+      name: SttTranscriptDone
+      title: transcript.done
+      summary: Final transcript emitted after the client sends audio.done.
+      payload:
+        type: object
+        required: [type, duration]
+        properties:
+          type:
+            type: string
+            const: transcript.done
+          text:
+            type: string
+            description: Final transcript text.
+          duration:
+            type: number
+            description: Total audio duration in seconds.
+          channel_index:
+            type: integer
+            description: Channel index (only present when multichannel=true).
+
+    SttError:
+      name: SttError
+      title: error
+      summary: STT error event.
+      payload:
+        type: object
+        required: [type, message]
+        properties:
+          type:
+            type: string
+            const: error
+          message:
+            type: string
+            description: Human-readable error description.
+
+    # -----------------------------------------------------------------
+    # Voice Agent (realtime) messages
+    # -----------------------------------------------------------------
+    RtSessionUpdate:
+      name: RtSessionUpdate
+      title: session.update
+      summary: Configure the voice session.
+      payload:
+        type: object
+        required: [type, session]
+        properties:
+          type:
+            type: string
+            const: session.update
+          session:
+            $ref: '#/components/schemas/RtSession'
+
+    RtConversationItemCreate:
+      name: RtConversationItemCreate
+      title: conversation.item.create
+      summary: Add a message or function output to the conversation.
+      payload:
+        type: object
+        required: [type, item]
+        properties:
+          type:
+            type: string
+            const: conversation.item.create
+          item:
+            $ref: '#/components/schemas/RtConversationItem'
+
+    RtResponseCreate:
+      name: RtResponseCreate
+      title: response.create
+      summary: Request the model to generate a response.
+      payload:
+        type: object
+        required: [type]
+        properties:
+          type:
+            type: string
+            const: response.create
+
+    RtInputAudioBufferAppend:
+      name: RtInputAudioBufferAppend
+      title: input_audio_buffer.append
+      summary: Append base64-encoded audio to the input buffer.
+      payload:
+        type: object
+        required: [type, audio]
+        properties:
+          type:
+            type: string
+            const: input_audio_buffer.append
+          audio:
+            type: string
+            description: Base64-encoded audio bytes (PCM/PCMU/PCMA per session config).
+
+    RtInputAudioBufferCommit:
+      name: RtInputAudioBufferCommit
+      title: input_audio_buffer.commit
+      summary: Mark the end of audio input for manual turn detection.
+      payload:
+        type: object
+        required: [type]
+        properties:
+          type:
+            type: string
+            const: input_audio_buffer.commit
+
+    RtInputAudioBufferClear:
+      name: RtInputAudioBufferClear
+      title: input_audio_buffer.clear
+      summary: Discard uncommitted audio from the input buffer.
+      payload:
+        type: object
+        required: [type]
+        properties:
+          type:
+            type: string
+            const: input_audio_buffer.clear
+
+    RtSessionCreated:
+      name: RtSessionCreated
+      title: session.created
+      summary: Sent when the WebSocket connection is established.
+      payload:
+        type: object
+        required: [type, session]
+        properties:
+          type:
+            type: string
+            const: session.created
+          session:
+            $ref: '#/components/schemas/RtSession'
+
+    RtSessionUpdated:
+      name: RtSessionUpdated
+      title: session.updated
+      summary: Sent after a successful session.update.
+      payload:
+        type: object
+        required: [type, session]
+        properties:
+          type:
+            type: string
+            const: session.updated
+          session:
+            $ref: '#/components/schemas/RtSession'
+
+    RtConversationItemCreated:
+      name: RtConversationItemCreated
+      title: conversation.item.created
+      summary: A conversation item (message or function output) was added.
+      payload:
+        type: object
+        required: [type, item]
+        properties:
+          type:
+            type: string
+            const: conversation.item.created
+          item:
+            $ref: '#/components/schemas/RtConversationItem'
+
+    RtInputAudioTranscriptionCompleted:
+      name: RtInputAudioTranscriptionCompleted
+      title: conversation.item.input_audio_transcription.completed
+      summary: Transcription of user speech for a conversation item.
+      payload:
+        type: object
+        required: [type, item_id, content_index, transcript]
+        properties:
+          type:
+            type: string
+            const: conversation.item.input_audio_transcription.completed
+          item_id:
+            type: string
+          content_index:
+            type: integer
+          transcript:
+            type: string
+
+    RtResponseCreated:
+      name: RtResponseCreated
+      title: response.created
+      summary: Model has begun generating a response.
+      payload:
+        type: object
+        required: [type, response]
+        properties:
+          type:
+            type: string
+            const: response.created
+          response:
+            $ref: '#/components/schemas/RtResponse'
+
+    RtResponseDone:
+      name: RtResponseDone
+      title: response.done
+      summary: Response generation has completed.
+      payload:
+        type: object
+        required: [type, response]
+        properties:
+          type:
+            type: string
+            const: response.done
+          response:
+            $ref: '#/components/schemas/RtResponse'
+
+    RtResponseOutputTextDelta:
+      name: RtResponseOutputTextDelta
+      title: response.output_text.delta
+      summary: Streamed text chunk from the model.
+      payload:
+        type: object
+        required: [type, text]
+        properties:
+          type:
+            type: string
+            const: response.output_text.delta
+          text:
+            type: string
+            description: Text chunk.
+          response_id:
+            type: string
+
+    RtResponseOutputAudioDelta:
+      name: RtResponseOutputAudioDelta
+      title: response.output_audio.delta
+      summary: Streamed audio chunk (base64) from the model.
+      payload:
+        type: object
+        required: [type]
+        properties:
+          type:
+            type: string
+            const: response.output_audio.delta
+          delta:
+            type: string
+            description: |
+              Base64-encoded audio chunk (per the official quick-start sample).
+          audio:
+            type: string
+            description: |
+              Base64-encoded audio chunk (alternate field name used in the
+              event reference).
+          response_id:
+            type: string
+
+    RtResponseFunctionCallArgumentsDone:
+      name: RtResponseFunctionCallArgumentsDone
+      title: response.function_call_arguments.done
+      summary: A function call has been triggered with complete arguments.
+      payload:
+        type: object
+        required: [type, name, call_id, arguments]
+        properties:
+          type:
+            type: string
+            const: response.function_call_arguments.done
+          name:
+            type: string
+            description: Function name.
+          call_id:
+            type: string
+            description: Unique call identifier; echoed back with function_call_output.
+          arguments:
+            type: string
+            description: JSON-encoded string of function arguments.
+          response_id:
+            type: string
+
+    RtError:
+      name: RtError
+      title: error
+      summary: Realtime API error event.
+      payload:
+        type: object
+        required: [type, error]
+        properties:
+          type:
+            type: string
+            const: error
+          error:
+            type: object
+            required: [message]
+            properties:
+              type:
+                type: string
+                description: Error category.
+              message:
+                type: string
+                description: Human-readable error description.
+              param:
+                type: string
+                description: Parameter that caused the error, when applicable.
+
+  schemas:
+    Word:
+      type: object
+      description: Word-level transcript segment.
+      properties:
+        text:
+          type: string
+        start:
+          type: number
+          description: Word start time in seconds.
+        end:
+          type: number
+          description: Word end time in seconds.
+
+    RtAudioFormat:
+      type: object
+      description: Audio format descriptor used by the realtime session config.
+      properties:
+        type:
+          type: string
+          enum:
+            - audio/pcm
+            - audio/pcmu
+            - audio/pcma
+        rate:
+          type: number
+          description: Sample rate (PCM only).
+
+    RtTurnDetection:
+      type: object
+      description: Turn detection configuration. Use null type for manual turns.
+      properties:
+        type:
+          type: [string, 'null']
+          enum:
+            - server_vad
+            - null
+        threshold:
+          type: number
+          minimum: 0.1
+          maximum: 0.9
+          description: VAD activation threshold.
+        silence_duration_ms:
+          type: number
+          minimum: 0
+          maximum: 10000
+          description: Silence duration before a turn ends.
+        prefix_padding_ms:
+          type: number
+          minimum: 0
+          maximum: 10000
+          description: Audio padding before detected speech start.
+
+    RtSession:
+      type: object
+      description: Voice session configuration.
+      properties:
+        voice:
+          type: string
+          description: Built-in voice (eve, ara, rex, sal, leo) or a custom voice ID.
+        instructions:
+          type: string
+          description: System prompt.
+        tools:
+          type: array
+          description: Tools available to the agent (file_search, web_search, x_search, mcp, function).
+          items:
+            type: object
+        turn_detection:
+          $ref: '#/components/schemas/RtTurnDetection'
+        audio:
+          type: object
+          properties:
+            input:
+              type: object
+              properties:
+                format:
+                  $ref: '#/components/schemas/RtAudioFormat'
+            output:
+              type: object
+              properties:
+                format:
+                  $ref: '#/components/schemas/RtAudioFormat'
+
+    RtMessageContent:
+      type: object
+      properties:
+        type:
+          type: string
+          description: Content block type (e.g. input_text, input_audio).
+        text:
+          type: string
+          description: Text content (for input_text blocks).
+        audio:
+          type: string
+          description: Base64-encoded audio (for input_audio blocks).
+
+    RtConversationItem:
+      type: object
+      description: A conversation item (message or function call output).
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum:
+            - message
+            - function_call_output
+        role:
+          type: string
+          enum:
+            - user
+            - assistant
+          description: Required for message items.
+        content:
+          type: array
+          description: Content blocks for message items.
+          items:
+            $ref: '#/components/schemas/RtMessageContent'
+        call_id:
+          type: string
+          description: For function_call_output items, the matching function call ID.
+        output:
+          type: string
+          description: For function_call_output items, the JSON-encoded function result.
+
+    RtResponse:
+      type: object
+      description: Response object metadata.
+      properties:
+        id:
+          type: string
+        status:
+          type: string

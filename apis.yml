@@ -12,7 +12,7 @@ tags:
   - Grok
   - Generative AI
 created: '2026-05-08'
-modified: '2026-05-19'
+modified: '2026-05-29'
 specificationVersion: '0.19'
 apis:
   - aid: xai:xai-chat-completions-api
@@ -102,6 +102,8 @@ apis:
       type: Documentation
     - url: openapi/xai-openapi.json
       type: OpenAPI
+    - url: asyncapi/xai-asyncapi.yml
+      type: AsyncAPI
     description: Realtime voice API supporting speech-to-text, text-to-speech, and bidirectional realtime voice interaction
       with Grok.
   - aid: xai:xai-embeddings-api
