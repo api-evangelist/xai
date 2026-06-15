@@ -1,0 +1,703 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "xAI's REST API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "v1",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get information about an API key, including name, status, permissions and users who created or modified this key.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/api-key",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get information about an API key, including name, status, permissions and users who created or modified this key."
+        },
+        {
+          "info": {
+            "name": "Create a chat response from text/image chat prompts. This is the endpoint for making requests to chat and image understanding models.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/chat/completions",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a chat response from text/image chat prompts. This is the endpoint for making requests to chat and image understanding models."
+        },
+        {
+          "info": {
+            "name": "Tries to fetch a result for a previously-started deferred completion. Returns `200 Success` with the response body, if the request has been completed. Returns `202 Accepted` when the request is pending processing.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/chat/deferred-completion/:request_id",
+            "params": [
+              {
+                "name": "request_id",
+                "value": "",
+                "type": "path",
+                "description": "The deferred request id returned by a previous deferred chat request."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Tries to fetch a result for a previously-started deferred completion. Returns `200 Success` with the response body, if the request has been completed. Returns `202 Accepted` when the request is pending processing."
+        },
+        {
+          "info": {
+            "name": "(Legacy - Not supported by reasoning models) Create a text completion response. This endpoint is compatible with the Anthropic API.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/complete",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "(Legacy - Not supported by reasoning models) Create a text completion response. This endpoint is compatible with the Anthropic API."
+        },
+        {
+          "info": {
+            "name": "(Legacy - Not supported by reasoning models) Create a text completion response for a given prompt. Replaced by /v1/chat/completions.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/completions",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "(Legacy - Not supported by reasoning models) Create a text completion response for a given prompt. Replaced by /v1/chat/completions."
+        },
+        {
+          "info": {
+            "name": "Search for content related to the query within the given collections.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/documents/search",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Search for content related to the query within the given collections."
+        },
+        {
+          "info": {
+            "name": "List all embedding models available to the authenticating API key with full information. Additional information compared to /v1/models includes modalities, pricing, fingerprint and alias(es).",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/embedding-models",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List all embedding models available to the authenticating API key with full information. Additional information compared to /v1/models includes modalities, pricing, fingerprint and alias(es)."
+        },
+        {
+          "info": {
+            "name": "Get full information about an embedding model with its model_id.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/embedding-models/:model_id",
+            "params": [
+              {
+                "name": "model_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the model to get."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get full information about an embedding model with its model_id."
+        },
+        {
+          "info": {
+            "name": "Create an embedding vector representation corresponding to the input text. This is the endpoint for making requests to embedding models.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/embeddings",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create an embedding vector representation corresponding to the input text. This is the endpoint for making requests to embedding models."
+        },
+        {
+          "info": {
+            "name": "List files owned by the authenticated team, paginated. The response\nalways returns a `pagination_token`; pass it back as a query parameter\nto fetch the next page. The end of the list is reached when the\nreturned `data` array is shorter than `limit`.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/files",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of objects to be returned in a single response."
+              },
+              {
+                "name": "order",
+                "value": "",
+                "type": "query",
+                "description": "The ordering to sort the returned files. Use `asc` for ascending and `desc` for descending order."
+              },
+              {
+                "name": "sort_by",
+                "value": "",
+                "type": "query",
+                "description": "The field to sort by. Valid options: `created_at`, `filename`, `size`. Defaults to `created_at`."
+              },
+              {
+                "name": "pagination_token",
+                "value": "",
+                "type": "query",
+                "description": "The pagination token returned by the previous list files request."
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "Only included for compatibility. Use `pagination_token` instead."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List files owned by the authenticated team, paginated. The response\nalways returns a `pagination_token`; pass it back as a query parameter\nto fetch the next page. The end of the list is reached when the\nreturned `data` array is shorter than `limit`."
+        },
+        {
+          "info": {
+            "name": "Upload a file to xAI's storage. Returns the file's metadata. Files can\nbe referenced by ID anywhere a `file_id` is accepted (e.g. chat\nattachments). Maximum file size: 50 MB. Files are kept until you\ndelete them, or until `expires_after` elapses if set at upload time.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/files",
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Upload a file to xAI's storage. Returns the file's metadata. Files can\nbe referenced by ID anywhere a `file_id` is accepted (e.g. chat\nattachments). Maximum file size: 50 MB. Files are kept until you\ndelete them, or until `expires_after` elapses if set at upload time."
+        },
+        {
+          "info": {
+            "name": "Retrieve metadata for a single file by ID. Errors with 404 if the file\ndoesn't exist, has been deleted, or has passed its `expires_at`.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/files/:file_id",
+            "params": [
+              {
+                "name": "file_id",
+                "value": "",
+                "type": "path",
+                "description": "The file's `id` returned by upload or list."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve metadata for a single file by ID. Errors with 404 if the file\ndoesn't exist, has been deleted, or has passed its `expires_at`."
+        },
+        {
+          "info": {
+            "name": "Delete a file by ID. After this returns, the file no longer appears in\n`GET /v1/files`, content download returns 404, and the ID can no longer\nbe referenced in chat attachments.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v1/files/:file_id",
+            "params": [
+              {
+                "name": "file_id",
+                "value": "",
+                "type": "path",
+                "description": "The file's `id` to delete."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete a file by ID. After this returns, the file no longer appears in\n`GET /v1/files`, content download returns 404, and the ID can no longer\nbe referenced in chat attachments."
+        },
+        {
+          "info": {
+            "name": "Download the contents of a file as a stream of raw bytes. The response\n`Content-Type` is `application/octet-stream`. Use this for the binary\npayload; use `GET /v1/files/{file_id}` for metadata only.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/files/:file_id/content",
+            "params": [
+              {
+                "name": "file_id",
+                "value": "",
+                "type": "path",
+                "description": "The file's `id` to download."
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query",
+                "description": "Format of the downloaded content."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Download the contents of a file as a stream of raw bytes. The response\n`Content-Type` is `application/octet-stream`. Use this for the binary\npayload; use `GET /v1/files/{file_id}` for metadata only."
+        },
+        {
+          "info": {
+            "name": "List all image generation models available to the authenticating API key with full information. Additional information compared to /v1/models includes modalities, pricing, fingerprint and alias(es).",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/image-generation-models",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List all image generation models available to the authenticating API key with full information. Additional information compared to /v1/models includes modalities, pricing, fingerprint and alias(es)."
+        },
+        {
+          "info": {
+            "name": "Get full information about an image generation model with its model_id.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/image-generation-models/:model_id",
+            "params": [
+              {
+                "name": "model_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the model to get."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get full information about an image generation model with its model_id."
+        },
+        {
+          "info": {
+            "name": "Edit an image based on a prompt. This is the endpoint for making edit requests to image generation models.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/images/edits",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Edit an image based on a prompt. This is the endpoint for making edit requests to image generation models."
+        },
+        {
+          "info": {
+            "name": "Generate an image based on a prompt. This is the endpoint for making generation requests to image generation models.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/images/generations",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Generate an image based on a prompt. This is the endpoint for making generation requests to image generation models."
+        },
+        {
+          "info": {
+            "name": "List all chat and image understanding models available to the authenticating API key with full information. Additional information compared to /v1/models includes modalities, pricing, fingerprint and alias(es).",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/language-models",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List all chat and image understanding models available to the authenticating API key with full information. Additional information compared to /v1/models includes modalities, pricing, fingerprint and alias(es)."
+        },
+        {
+          "info": {
+            "name": "Get full information about a chat or image understanding model with its model_id.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/language-models/:model_id",
+            "params": [
+              {
+                "name": "model_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the model to get."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get full information about a chat or image understanding model with its model_id."
+        },
+        {
+          "info": {
+            "name": "Create a messages response. This endpoint is compatible with the Anthropic API.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/messages",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a messages response. This endpoint is compatible with the Anthropic API."
+        },
+        {
+          "info": {
+            "name": "List all models available to the authenticating API key with minimalized information, including model names (ID), creation times, etc.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/models",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List all models available to the authenticating API key with minimalized information, including model names (ID), creation times, etc."
+        },
+        {
+          "info": {
+            "name": "Get minimalized information about a model with its model_id.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/models/:model_id",
+            "params": [
+              {
+                "name": "model_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the model to get."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get minimalized information about a model with its model_id."
+        },
+        {
+          "info": {
+            "name": "Generates a response based on text or image prompts. The response ID can be used to retrieve the response later or to continue the conversation without repeating prior context. New responses will be stored for 30 days and then permanently deleted.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/responses",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Generates a response based on text or image prompts. The response ID can be used to retrieve the response later or to continue the conversation without repeating prior context. New responses will be stored for 30 days and then permanently deleted."
+        },
+        {
+          "info": {
+            "name": "Retrieve a previously generated response.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/responses/:response_id",
+            "params": [
+              {
+                "name": "response_id",
+                "value": "",
+                "type": "path",
+                "description": "The response id returned by a previous create response request."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve a previously generated response."
+        },
+        {
+          "info": {
+            "name": "Delete a previously generated response.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v1/responses/:response_id",
+            "params": [
+              {
+                "name": "response_id",
+                "value": "",
+                "type": "path",
+                "description": "The response id returned by a previous create response request."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete a previously generated response."
+        },
+        {
+          "info": {
+            "name": "Tokenize text with the specified model",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/tokenize-text",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Tokenize text with the specified model"
+        },
+        {
+          "info": {
+            "name": "List all video generation models available to the authenticating API key with full information.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/video-generation-models",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List all video generation models available to the authenticating API key with full information."
+        },
+        {
+          "info": {
+            "name": "Get full information about a video generation model with its model_id.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/video-generation-models/:model_id",
+            "params": [
+              {
+                "name": "model_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the model to get."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get full information about a video generation model with its model_id."
+        },
+        {
+          "info": {
+            "name": "Edit a video based on a prompt.\nThis is an asynchronous operation that returns a request_id for polling.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/videos/edits",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Edit a video based on a prompt.\nThis is an asynchronous operation that returns a request_id for polling."
+        },
+        {
+          "info": {
+            "name": "Extend a video by generating continuation content.\nThis is an asynchronous operation that returns a request_id for polling.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/videos/extensions",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Extend a video by generating continuation content.\nThis is an asynchronous operation that returns a request_id for polling."
+        },
+        {
+          "info": {
+            "name": "Generate a video from a text prompt and optionally an image.\nThis is an asynchronous operation that returns a request_id for polling.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/videos/generations",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Generate a video from a text prompt and optionally an image.\nThis is an asynchronous operation that returns a request_id for polling."
+        },
+        {
+          "info": {
+            "name": "Get the result of a deferred video generation request.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/videos/:request_id",
+            "params": [
+              {
+                "name": "request_id",
+                "value": "",
+                "type": "path",
+                "description": "The deferred request id returned by a previous video generation request."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the current status of a video generation job. When the job completes\nsuccessfully the response contains the generated video URL. When the job fails\nthe response contains a structured `error` object with a machine-readable\n`code` and a human-readable `message`.\n\nBoth successful and failed completions return HTTP 200 — use the `status`\nfield (`\"done\"` or `\"failed\"`) to distinguish between the two."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
