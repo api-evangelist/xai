@@ -6,7 +6,7 @@ description: >-
   xAI is an AI research lab founded by Elon Musk. The xAI API exposes Grok foundation models for chat, function calling,
   vision, voice, image generation, and video generation, alongside research outputs from the Colossus training
   supercluster.
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 tags:
   - AI
   - LLM
@@ -24,7 +24,7 @@ apis:
       - Completions
       - LLM
       - Grok
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     humanURL: https://docs.x.ai/docs/api-reference
     baseURL: https://api.x.ai/v1
     properties:
@@ -44,7 +44,7 @@ apis:
       - LLM
       - Grok
       - Reasoning
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     humanURL: https://docs.x.ai/docs/api-reference
     baseURL: https://api.x.ai/v1
     properties:
@@ -61,7 +61,7 @@ apis:
       - Images
       - Generation
       - Multimodal
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     humanURL: https://docs.x.ai/docs/api-reference
     baseURL: https://api.x.ai/v1
     properties:
@@ -80,7 +80,7 @@ apis:
       - Video
       - Generation
       - Multimodal
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     humanURL: https://docs.x.ai/docs/api-reference
     baseURL: https://api.x.ai/v1
     properties:
@@ -98,7 +98,7 @@ apis:
       - Speech
       - Audio
       - Realtime
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     humanURL: https://docs.x.ai/docs/api-reference
     baseURL: https://api.x.ai/v1
     properties:
@@ -116,7 +116,7 @@ apis:
     tags:
       - Embeddings
       - Vector
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     humanURL: https://docs.x.ai/docs/api-reference
     baseURL: https://api.x.ai/v1
     properties:
@@ -130,7 +130,7 @@ apis:
     tags:
       - Models
       - Catalog
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     humanURL: https://docs.x.ai/docs/api-reference
     baseURL: https://api.x.ai/v1
     properties:
@@ -144,7 +144,7 @@ apis:
     tags:
       - Batch
       - Async
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     humanURL: https://docs.x.ai/docs/api-reference
     baseURL: https://api.x.ai/v1
     properties:
