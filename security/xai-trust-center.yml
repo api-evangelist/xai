@@ -1,0 +1,13 @@
+generated: '2026-07-11'
+method: searched
+probe: true
+source: https://x.ai/security
+url: https://x.ai/security
+certifications:
+- HIPAA
+- GDPR
+evidence:
+- source: https://x.ai/security
+  keywords:
+  - hipaa
+  - gdpr

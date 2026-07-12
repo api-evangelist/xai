@@ -156,6 +156,14 @@ apis:
       Submits offline batch jobs of chat or embedding requests at a discount (20-50% off standard rates), with results
       returned out-of-band. Batch requests do not count toward rate limits.
 common:
+  - type: TrustCenter
+    url: security/xai-trust-center.yml
+  - type: VulnerabilityDisclosure
+    url: security/xai-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/xai-domain-security.yml
+  - type: Authentication
+    url: authentication/xai-authentication.yml
   - type: GitHubOrganization
     url: https://github.com/xai-org
   - type: LinkedIn
