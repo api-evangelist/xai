@@ -156,6 +156,8 @@ apis:
       Submits offline batch jobs of chat or embedding requests at a discount (20-50% off standard rates), with results
       returned out-of-band. Batch requests do not count toward rate limits.
 common:
+  - type: AgenticAccess
+    url: agentic-access/xai-agentic-access.yml
   - type: TrustCenter
     url: security/xai-trust-center.yml
   - type: VulnerabilityDisclosure
