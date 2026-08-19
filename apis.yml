@@ -28,7 +28,7 @@ tags:
   - Generative AI
 created: '2026-05-08'
 modified: '2026-05-29'
-specificationVersion: '0.19'
+specificationVersion: '0.23'
 apis:
 - aid: xai:xai-v1-api
   name: xAI v1 API
