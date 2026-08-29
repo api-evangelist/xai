@@ -6,6 +6,18 @@ description: >-
   xAI is an AI research lab founded by Elon Musk. The xAI API exposes Grok foundation models for chat, function calling,
   vision, voice, image generation, and video generation, alongside research outputs from the Colossus training
   supercluster.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: paid
   onboarding: self-serve
