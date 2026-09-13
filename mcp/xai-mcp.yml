@@ -1,0 +1,27 @@
+generated: '2026-09-11'
+method: probed
+source: https://docs.x.ai/api/mcp
+status: published
+server:
+  name: xai
+  transport: http
+  url: https://docs.x.ai/api/mcp
+deployment:
+  mode: remote
+  endpoint: https://docs.x.ai/api/mcp
+  verified: probed
+  probe: live
+  checked: '2026-09-11'
+  source: docs-check 2026-09-11 (endpoint found in the provider's own documentation, then probed)
+tools_count: 4
+tools:
+- name: list_doc_pages
+  description: ''
+- name: get_doc_page
+  description: ''
+- name: search_docs
+  description: ''
+- name: get_llms_txt
+  description: ''
+tools_source: live tools/list via initialize handshake, 2026-09-11 (signals/audit_mcp_authorship.py --probe)
+authorship: provider
