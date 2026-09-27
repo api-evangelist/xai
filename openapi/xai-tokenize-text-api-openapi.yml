@@ -1,0 +1,111 @@
+openapi: 3.2.0
+info:
+  title: xAI's REST Tokenize Text API
+  description: REST API for xAI compatible with other providers.
+  license:
+    name: ''
+  version: 1.0.0
+tags:
+- name: Tokenize Text
+paths:
+  /v1/tokenize-text:
+    post:
+      tags:
+      - Tokenize Text
+      summary: Tokenize text with the specified model
+      operationId: handle_tokenize_text_request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenizeRequest'
+            example:
+              text: Hello world!
+              model: latest
+        required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenizeResponse'
+              example:
+                token_ids:
+                - token_id: 13902
+                  string_token: Hello
+                  token_bytes:
+                  - 72
+                  - 101
+                  - 108
+                  - 108
+                  - 111
+                - token_id: 1749
+                  string_token: ' world'
+                  token_bytes:
+                  - 32
+                  - 119
+                  - 111
+                  - 114
+                  - 108
+                  - 100
+                - token_id: 161
+                  string_token: '!'
+                  token_bytes:
+                  - 33
+        '400':
+          description: Bad request. The request is invalid or an invalid API key is provided.
+      security:
+      - bearerAuth: []
+components:
+  schemas:
+    TokenizeResponseToken:
+      type: object
+      required:
+      - token_id
+      - string_token
+      - token_bytes
+      properties:
+        string_token:
+          type: string
+          description: The string of the token.
+        token_bytes:
+          type: array
+          items:
+            type: integer
+            format: int32
+            minimum: 0
+          description: The bytes that constituted the token.
+        token_id:
+          type: integer
+          format: int32
+          description: The integer representation of the token for the model.
+          minimum: 0
+    TokenizeResponse:
+      type: object
+      required:
+      - token_ids
+      properties:
+        token_ids:
+          type: array
+          items:
+            $ref: '#/components/schemas/TokenizeResponseToken'
+          description: A list of tokens.
+    TokenizeRequest:
+      type: object
+      properties:
+        model:
+          type: string
+          description: The model to tokenize with.
+        text:
+          type: string
+          description: The text content to be tokenized.
+        user:
+          type:
+          - string
+          - 'null'
+          description: Optional user identifier.
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer

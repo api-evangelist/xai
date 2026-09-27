@@ -1,0 +1,213 @@
+openapi: 3.2.0
+info:
+  title: xAI's REST Language Models API
+  description: REST API for xAI compatible with other providers.
+  license:
+    name: ''
+  version: 1.0.0
+tags:
+- name: Language Models
+paths:
+  /v1/language-models:
+    get:
+      tags:
+      - Language Models
+      summary: List all chat and image understanding models available to the authenticating…
+      operationId: handle_language_models_list_request
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListLanguageModelsResponse'
+              example:
+                models:
+                - id: grok-3
+                  fingerprint: fp_898ae9f31c
+                  created: 1743724800
+                  object: model
+                  owned_by: xai
+                  version: '1.0'
+                  input_modalities:
+                  - text
+                  output_modalities:
+                  - text
+                  prompt_text_token_price: 30000
+                  cached_prompt_text_token_price: 7500
+                  prompt_image_token_price: 0
+                  completion_text_token_price: 150000
+                  search_price: 250000000
+                  aliases:
+                  - grok-3-latest
+                  - grok-3-beta
+                - id: grok-3-mini
+                  fingerprint: fp_6a09108ff5
+                  created: 1743724800
+                  object: model
+                  owned_by: xai
+                  version: '1.0'
+                  input_modalities:
+                  - text
+                  output_modalities:
+                  - text
+                  prompt_text_token_price: 3000
+                  cached_prompt_text_token_price: 750
+                  prompt_image_token_price: 0
+                  completion_text_token_price: 5000
+                  search_price: 250000000
+                  aliases:
+                  - grok-3-mini-latest
+                  - grok-3-mini-beta
+                - id: grok-2-vision-1212
+                  fingerprint: fp_daba7546e5
+                  created: 1733961600
+                  object: model
+                  owned_by: xai
+                  version: 0.1.0
+                  input_modalities:
+                  - text
+                  - image
+                  output_modalities:
+                  - text
+                  prompt_text_token_price: 20000
+                  prompt_image_token_price: 20000
+                  completion_text_token_price: 100000
+                  aliases: []
+        '400':
+          description: Bad request. The request is invalid or an invalid API key is provided.
+      security:
+      - bearerAuth: []
+  /v1/language-models/{model_id}:
+    get:
+      tags:
+      - Language Models
+      summary: Get full information about a chat or image understanding model with its model_id
+      operationId: handle_language_model_get_request
+      parameters:
+      - name: model_id
+        in: path
+        description: ID of the model to get.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LanguageModel'
+              example:
+                id: latest
+                fingerprint: fp_156d35dcaa
+                created: 1743724800
+                object: model
+                owned_by: xai
+                version: 1.0.0
+                input_modalities:
+                - text
+                output_modalities:
+                - text
+                prompt_text_token_price: 20000
+                cached_prompt_text_token_price: 0
+                prompt_image_token_price: 0
+                completion_text_token_price: 100000
+                aliases:
+                - grok-4
+                - grok-4-latest
+        '400':
+          description: Bad request. The request is invalid or an invalid API key is provided.
+        '404':
+          description: Model not found
+      security:
+      - bearerAuth: []
+components:
+  schemas:
+    LanguageModel:
+      type: object
+      description: Details of a language model
+      required:
+      - id
+      - fingerprint
+      - created
+      - object
+      - owned_by
+      - version
+      - input_modalities
+      - output_modalities
+      - prompt_text_token_price
+      - cached_prompt_text_token_price
+      - prompt_image_token_price
+      - completion_text_token_price
+      - search_price
+      - aliases
+      properties:
+        aliases:
+          type: array
+          items:
+            type: string
+          description: Alias ID(s) of the model that user can use in a request's model field.
+        cached_prompt_text_token_price:
+          type: integer
+          format: int64
+          description: Price of a prompt text token (in USD cents per 100 million tokens) that was cached previously.
+        completion_text_token_price:
+          type: integer
+          format: int64
+          description: Price of the completion text token in USD cents per 100 million token.
+        created:
+          type: integer
+          format: int64
+          description: Creation time of the model in Unix timestamp.
+        fingerprint:
+          type: string
+          description: Fingerprint of the xAI system configuration hosting the model.
+        id:
+          type: string
+          description: Model ID. Obtainable from <https://console.x.ai/team/default/models> or <https://docs.x.ai/docs/models>.
+        input_modalities:
+          type: array
+          items:
+            type: string
+          description: The input modalities supported by the model, e.g. `"text"`, `"image"`.
+        object:
+          type: string
+          description: The object type, which is always `"model"`.
+        output_modalities:
+          type: array
+          items:
+            type: string
+          description: The output modalities supported by the model, e.g. `"text"`, `"image"`.
+        owned_by:
+          type: string
+          description: Owner of the model.
+        prompt_image_token_price:
+          type: integer
+          format: int64
+          description: Price of the prompt image token in USD cents per 100 million token.
+        prompt_text_token_price:
+          type: integer
+          format: int64
+          description: Price of the prompt text token in USD cents per 100 million token.
+        search_price:
+          type: integer
+          format: int64
+          description: Price of the search in USD cents per 100 million searches.
+        version:
+          type: string
+          description: Version of the model.
+    ListLanguageModelsResponse:
+      type: object
+      required:
+      - models
+      properties:
+        models:
+          type: array
+          items:
+            $ref: '#/components/schemas/LanguageModel'
+          description: Array of available language models.
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer

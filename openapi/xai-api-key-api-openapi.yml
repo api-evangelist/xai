@@ -1,0 +1,102 @@
+openapi: 3.2.0
+info:
+  title: xAI's REST Api Key API
+  description: REST API for xAI compatible with other providers.
+  license:
+    name: ''
+  version: 1.0.0
+tags:
+- name: API Key
+paths:
+  /v1/api-key:
+    get:
+      tags:
+      - API Key
+      summary: Get information about an API key, including name, status, permissions and users…
+      operationId: handle_get_api_key_info_request
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiKey'
+              example:
+                redacted_api_key: xai-...b14o
+                user_id: 59fbe5f2-040b-46d5-8325-868bb8f23eb2
+                name: My API Key
+                create_time: '2024-01-01T12:55:18.139305Z'
+                modify_time: '2024-08-28T17:20:12.343321Z'
+                modified_by: 3d38b4dc-4eb7-4785-ae26-c3fa8997ffc7
+                team_id: 5ea6f6bd-7815-4b8a-9135-28b2d7ba6722
+                acls:
+                - api-key:model:*
+                - api-key:endpoint:*
+                api_key_id: ae1e1841-4326-4b36-a8a9-8a1a7237db11
+                team_blocked: false
+                api_key_blocked: false
+                api_key_disabled: false
+        '400':
+          description: Bad request. The request is invalid or an invalid API key is provided.
+      security:
+      - bearerAuth: []
+components:
+  schemas:
+    ApiKey:
+      type: object
+      required:
+      - redacted_api_key
+      - user_id
+      - name
+      - create_time
+      - modify_time
+      - modified_by
+      - team_id
+      - acls
+      - api_key_id
+      - team_blocked
+      - api_key_blocked
+      - api_key_disabled
+      properties:
+        acls:
+          type: array
+          items:
+            type: string
+          description: A list of ACLs authorized with the API key, e.g. `"api-key:endpoint:*"`, `"api-key:model:*"`.
+        api_key_blocked:
+          type: boolean
+          description: Indicates whether the API key is blocked.
+        api_key_disabled:
+          type: boolean
+          description: Indicates whether the API key is disabled.
+        api_key_id:
+          type: string
+          description: ID of the API key.
+        create_time:
+          type: string
+          description: Creation time of the API key in Unix timestamp.
+        modified_by:
+          type: string
+          description: User ID of the user who last modified the API key.
+        modify_time:
+          type: string
+          description: Last modification time of the API key in Unix timestamp.
+        name:
+          type: string
+          description: The name of the API key specified by user.
+        redacted_api_key:
+          type: string
+          description: The redacted API key.
+        team_blocked:
+          type: boolean
+          description: Indicates whether the team that owns the API key.
+        team_id:
+          type: string
+          description: The team ID of the team that owns the API key.
+        user_id:
+          type: string
+          description: User ID the API key belongs to.
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer

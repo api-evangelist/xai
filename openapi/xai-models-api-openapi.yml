@@ -1,0 +1,127 @@
+openapi: 3.2.0
+info:
+  title: xAI's REST Models API
+  description: REST API for xAI compatible with other providers.
+  license:
+    name: ''
+  version: 1.0.0
+tags:
+- name: Models
+paths:
+  /v1/models:
+    get:
+      tags:
+      - Models
+      summary: List all models available to the authenticating API key with minimalized…
+      operationId: handle_models_list_request
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListModelsResponse'
+              example:
+                data:
+                - id: grok-4-0709
+                  created: 1752019200
+                  object: model
+                  owned_by: xai
+                - id: grok-code-fast-1
+                  created: 1755993600
+                  object: model
+                  owned_by: xai
+                - id: grok-3
+                  created: 1743724800
+                  object: model
+                  owned_by: xai
+                - id: grok-3-mini
+                  created: 1743724800
+                  object: model
+                  owned_by: xai
+                - id: grok-2-image-1212
+                  created: 1736726400
+                  object: model
+                  owned_by: xai
+                - id: grok-2-vision-1212
+                  created: 1733961600
+                  object: model
+                  owned_by: xai
+                object: list
+        '400':
+          description: Bad request. The request is invalid or an invalid API key is provided.
+      security:
+      - bearerAuth: []
+  /v1/models/{model_id}:
+    get:
+      tags:
+      - Models
+      summary: Get minimalized information about a model with its model_id
+      operationId: handle_model_get_request
+      parameters:
+      - name: model_id
+        in: path
+        description: ID of the model to get.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Model'
+              example:
+                id: latest
+                created: 1743724800
+                object: model
+                owned_by: xai
+        '400':
+          description: Bad request. The request is invalid or an invalid API key is provided.
+        '404':
+          description: Model not found
+      security:
+      - bearerAuth: []
+components:
+  schemas:
+    Model:
+      type: object
+      description: Same as `LanguageModel` but fully compliant with the OpenAI API.
+      required:
+      - id
+      - created
+      - object
+      - owned_by
+      properties:
+        created:
+          type: integer
+          format: int64
+          description: Model creation time in Unix timestamp.
+        id:
+          type: string
+          description: Model ID. Obtainable from <https://console.x.ai/team/default/models> or <https://docs.x.ai/docs/models>.
+        object:
+          type: string
+          description: The object type, which is always `"model"`.
+        owned_by:
+          type: string
+          description: Owner of the model.
+    ListModelsResponse:
+      type: object
+      required:
+      - data
+      - object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Model'
+          description: A list of models with with minimalized information.
+        object:
+          type: string
+          description: The object type of `data` field, which is always `"list"`.
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer

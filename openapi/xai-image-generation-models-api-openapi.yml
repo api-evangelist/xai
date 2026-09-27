@@ -1,0 +1,151 @@
+openapi: 3.2.0
+info:
+  title: xAI's REST Image Generation Models API
+  description: REST API for xAI compatible with other providers.
+  license:
+    name: ''
+  version: 1.0.0
+tags:
+- name: Image Generation Models
+paths:
+  /v1/image-generation-models:
+    get:
+      tags:
+      - Image Generation Models
+      summary: List all image generation models available to the authenticating API key with…
+      operationId: handle_image_generation_models_list_request
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListImageGenerationModelsResponse'
+              example:
+                models:
+                - id: grok-imagine-image
+                  fingerprint: fp_ca78641a52
+                  max_prompt_length: 1024
+                  created: 1738961600
+                  object: model
+                  owned_by: xai
+                  version: 1.0.0
+                  prompt_text_token_price: 100000
+                  prompt_image_token_price: 100000
+                  generated_image_token_price: 100000
+                  aliases: []
+        '400':
+          description: Bad request. The request is invalid or an invalid API key is provided.
+      security:
+      - bearerAuth: []
+  /v1/image-generation-models/{model_id}:
+    get:
+      tags:
+      - Image Generation Models
+      summary: Get full information about an image generation model with its model_id
+      operationId: handle_image_generation_model_get_request
+      parameters:
+      - name: model_id
+        in: path
+        description: ID of the model to get.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImageGenerationModel'
+              example:
+                id: grok-imagine-image
+                fingerprint: fp_ca78641a52
+                max_prompt_length: 1024
+                created: 1737961600
+                object: model
+                owned_by: xai
+                version: 1.0.0
+                prompt_text_token_price: 100000
+                prompt_image_token_price: 100000
+                generated_image_token_price: 100000
+                aliases: []
+        '400':
+          description: Bad request. The request is invalid or an invalid API key is provided.
+        '404':
+          description: Model not found
+      security:
+      - bearerAuth: []
+components:
+  schemas:
+    ImageGenerationModel:
+      type: object
+      description: Details of an image generation model
+      required:
+      - id
+      - fingerprint
+      - max_prompt_length
+      - created
+      - object
+      - owned_by
+      - version
+      - input_modalities
+      - output_modalities
+      - image_price
+      - aliases
+      properties:
+        aliases:
+          type: array
+          items:
+            type: string
+          description: Alias ID(s) of the model that user can use in a request's model field.
+        created:
+          type: integer
+          format: int64
+          description: Model creation time in Unix timestamp.
+        fingerprint:
+          type: string
+          description: Fingerprint of the xAI system configuration hosting the model.
+        id:
+          type: string
+          description: Model ID.
+        image_price:
+          type: integer
+          format: int64
+          description: Price of a single image in USD cents.
+        input_modalities:
+          type: array
+          items:
+            type: string
+          description: The input modalities supported by the model.
+        max_prompt_length:
+          type: integer
+          format: int64
+        object:
+          type: string
+          description: The object type, which is always `"model"`.
+        output_modalities:
+          type: array
+          items:
+            type: string
+          description: The output modalities supported by the model.
+        owned_by:
+          type: string
+          description: Owner of the model.
+        version:
+          type: string
+          description: Version of the model.
+    ListImageGenerationModelsResponse:
+      type: object
+      required:
+      - models
+      properties:
+        models:
+          type: array
+          items:
+            $ref: '#/components/schemas/ImageGenerationModel'
+          description: Array of available image generation models.
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer

@@ -39,26 +39,540 @@ tags:
   - Foundation Models
   - Grok
   - Generative AI
+  - Real-Time
 tags_raw:
   - AI
   - LLM
   - Foundation Models
   - Grok
   - Generative AI
+  - Real-Time
 created: '2026-05-08'
 modified: '2026-05-29'
 specificationVersion: '0.23'
 apis:
-- aid: xai:xai-v1-api
-  name: xAI v1 API
-  description: The v1 API from xAI — 30 operation(s) for v1.
+- aid: xai:xai-api-key-api
+  name: xAI Api Key API
+  description: The Api Key API from xAI — 1 operation(s) for api key.
   humanURL: https://docs.x.ai/docs/api-reference
   baseURL: https://api.x.ai/v1
   tags:
-  - v1
+  - Api Key
   properties:
   - type: OpenAPI
-    url: openapi/xai-v1-api-openapi.yml
+    url: openapi/xai-api-key-api-openapi.yml
+  - type: Documentation
+    url: https://docs.x.ai/docs/overview
+  - type: APIReference
+    url: https://docs.x.ai/docs/api-reference#chat-completions
+  - type: Documentation
+    url: https://docs.x.ai/docs/api-reference#responses
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/image-generations
+  - type: APIReference
+    url: https://docs.x.ai/docs/api-reference#image-generations
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/video-generation
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/voice
+  - type: AsyncAPI
+    url: asyncapi/xai-asyncapi.yml
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/embeddings
+  - type: Documentation
+    url: https://docs.x.ai/docs/api-reference#models
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/batch
+- aid: xai:xai-chat-api
+  name: xAI Chat API
+  description: The Chat API from xAI — 2 operation(s) for chat.
+  humanURL: https://docs.x.ai/docs/api-reference
+  baseURL: https://api.x.ai/v1
+  tags:
+  - Chat
+  properties:
+  - type: OpenAPI
+    url: openapi/xai-chat-api-openapi.yml
+  - type: Documentation
+    url: https://docs.x.ai/docs/overview
+  - type: APIReference
+    url: https://docs.x.ai/docs/api-reference#chat-completions
+  - type: Documentation
+    url: https://docs.x.ai/docs/api-reference#responses
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/image-generations
+  - type: APIReference
+    url: https://docs.x.ai/docs/api-reference#image-generations
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/video-generation
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/voice
+  - type: AsyncAPI
+    url: asyncapi/xai-asyncapi.yml
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/embeddings
+  - type: Documentation
+    url: https://docs.x.ai/docs/api-reference#models
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/batch
+- aid: xai:xai-complete-api
+  name: xAI Complete API
+  description: The Complete API from xAI — 1 operation(s) for complete.
+  humanURL: https://docs.x.ai/docs/api-reference
+  baseURL: https://api.x.ai/v1
+  tags:
+  - Complete
+  properties:
+  - type: OpenAPI
+    url: openapi/xai-complete-api-openapi.yml
+  - type: Documentation
+    url: https://docs.x.ai/docs/overview
+  - type: APIReference
+    url: https://docs.x.ai/docs/api-reference#chat-completions
+  - type: Documentation
+    url: https://docs.x.ai/docs/api-reference#responses
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/image-generations
+  - type: APIReference
+    url: https://docs.x.ai/docs/api-reference#image-generations
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/video-generation
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/voice
+  - type: AsyncAPI
+    url: asyncapi/xai-asyncapi.yml
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/embeddings
+  - type: Documentation
+    url: https://docs.x.ai/docs/api-reference#models
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/batch
+- aid: xai:xai-completions-api
+  name: xAI Completions API
+  description: The Completions API from xAI — 1 operation(s) for completions.
+  humanURL: https://docs.x.ai/docs/api-reference
+  baseURL: https://api.x.ai/v1
+  tags:
+  - Completions
+  properties:
+  - type: OpenAPI
+    url: openapi/xai-completions-api-openapi.yml
+  - type: Documentation
+    url: https://docs.x.ai/docs/overview
+  - type: APIReference
+    url: https://docs.x.ai/docs/api-reference#chat-completions
+  - type: Documentation
+    url: https://docs.x.ai/docs/api-reference#responses
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/image-generations
+  - type: APIReference
+    url: https://docs.x.ai/docs/api-reference#image-generations
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/video-generation
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/voice
+  - type: AsyncAPI
+    url: asyncapi/xai-asyncapi.yml
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/embeddings
+  - type: Documentation
+    url: https://docs.x.ai/docs/api-reference#models
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/batch
+- aid: xai:xai-documents-api
+  name: xAI Documents API
+  description: The Documents API from xAI — 1 operation(s) for documents.
+  humanURL: https://docs.x.ai/docs/api-reference
+  baseURL: https://api.x.ai/v1
+  tags:
+  - Documents
+  properties:
+  - type: OpenAPI
+    url: openapi/xai-documents-api-openapi.yml
+  - type: Documentation
+    url: https://docs.x.ai/docs/overview
+  - type: APIReference
+    url: https://docs.x.ai/docs/api-reference#chat-completions
+  - type: Documentation
+    url: https://docs.x.ai/docs/api-reference#responses
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/image-generations
+  - type: APIReference
+    url: https://docs.x.ai/docs/api-reference#image-generations
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/video-generation
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/voice
+  - type: AsyncAPI
+    url: asyncapi/xai-asyncapi.yml
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/embeddings
+  - type: Documentation
+    url: https://docs.x.ai/docs/api-reference#models
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/batch
+- aid: xai:xai-embedding-models-api
+  name: xAI Embedding Models API
+  description: The Embedding Models API from xAI — 2 operation(s) for embedding models.
+  humanURL: https://docs.x.ai/docs/api-reference
+  baseURL: https://api.x.ai/v1
+  tags:
+  - Embedding Models
+  properties:
+  - type: OpenAPI
+    url: openapi/xai-embedding-models-api-openapi.yml
+  - type: Documentation
+    url: https://docs.x.ai/docs/overview
+  - type: APIReference
+    url: https://docs.x.ai/docs/api-reference#chat-completions
+  - type: Documentation
+    url: https://docs.x.ai/docs/api-reference#responses
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/image-generations
+  - type: APIReference
+    url: https://docs.x.ai/docs/api-reference#image-generations
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/video-generation
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/voice
+  - type: AsyncAPI
+    url: asyncapi/xai-asyncapi.yml
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/embeddings
+  - type: Documentation
+    url: https://docs.x.ai/docs/api-reference#models
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/batch
+- aid: xai:xai-embeddings-api
+  name: xAI Embeddings API
+  description: The Embeddings API from xAI — 1 operation(s) for embeddings.
+  humanURL: https://docs.x.ai/docs/api-reference
+  baseURL: https://api.x.ai/v1
+  tags:
+  - Embeddings
+  properties:
+  - type: OpenAPI
+    url: openapi/xai-embeddings-api-openapi.yml
+  - type: Documentation
+    url: https://docs.x.ai/docs/overview
+  - type: APIReference
+    url: https://docs.x.ai/docs/api-reference#chat-completions
+  - type: Documentation
+    url: https://docs.x.ai/docs/api-reference#responses
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/image-generations
+  - type: APIReference
+    url: https://docs.x.ai/docs/api-reference#image-generations
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/video-generation
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/voice
+  - type: AsyncAPI
+    url: asyncapi/xai-asyncapi.yml
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/embeddings
+  - type: Documentation
+    url: https://docs.x.ai/docs/api-reference#models
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/batch
+- aid: xai:xai-files-api
+  name: xAI Files API
+  description: The Files API from xAI — 3 operation(s) for files.
+  humanURL: https://docs.x.ai/docs/api-reference
+  baseURL: https://api.x.ai/v1
+  tags:
+  - Files
+  properties:
+  - type: OpenAPI
+    url: openapi/xai-files-api-openapi.yml
+  - type: Documentation
+    url: https://docs.x.ai/docs/overview
+  - type: APIReference
+    url: https://docs.x.ai/docs/api-reference#chat-completions
+  - type: Documentation
+    url: https://docs.x.ai/docs/api-reference#responses
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/image-generations
+  - type: APIReference
+    url: https://docs.x.ai/docs/api-reference#image-generations
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/video-generation
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/voice
+  - type: AsyncAPI
+    url: asyncapi/xai-asyncapi.yml
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/embeddings
+  - type: Documentation
+    url: https://docs.x.ai/docs/api-reference#models
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/batch
+- aid: xai:xai-image-generation-models-api
+  name: xAI Image Generation Models API
+  description: The Image Generation Models API from xAI — 2 operation(s) for image generation models.
+  humanURL: https://docs.x.ai/docs/api-reference
+  baseURL: https://api.x.ai/v1
+  tags:
+  - Image Generation Models
+  properties:
+  - type: OpenAPI
+    url: openapi/xai-image-generation-models-api-openapi.yml
+  - type: Documentation
+    url: https://docs.x.ai/docs/overview
+  - type: APIReference
+    url: https://docs.x.ai/docs/api-reference#chat-completions
+  - type: Documentation
+    url: https://docs.x.ai/docs/api-reference#responses
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/image-generations
+  - type: APIReference
+    url: https://docs.x.ai/docs/api-reference#image-generations
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/video-generation
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/voice
+  - type: AsyncAPI
+    url: asyncapi/xai-asyncapi.yml
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/embeddings
+  - type: Documentation
+    url: https://docs.x.ai/docs/api-reference#models
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/batch
+- aid: xai:xai-images-api
+  name: xAI Images API
+  description: The Images API from xAI — 2 operation(s) for images.
+  humanURL: https://docs.x.ai/docs/api-reference
+  baseURL: https://api.x.ai/v1
+  tags:
+  - Images
+  properties:
+  - type: OpenAPI
+    url: openapi/xai-images-api-openapi.yml
+  - type: Documentation
+    url: https://docs.x.ai/docs/overview
+  - type: APIReference
+    url: https://docs.x.ai/docs/api-reference#chat-completions
+  - type: Documentation
+    url: https://docs.x.ai/docs/api-reference#responses
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/image-generations
+  - type: APIReference
+    url: https://docs.x.ai/docs/api-reference#image-generations
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/video-generation
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/voice
+  - type: AsyncAPI
+    url: asyncapi/xai-asyncapi.yml
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/embeddings
+  - type: Documentation
+    url: https://docs.x.ai/docs/api-reference#models
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/batch
+- aid: xai:xai-language-models-api
+  name: xAI Language Models API
+  description: The Language Models API from xAI — 2 operation(s) for language models.
+  humanURL: https://docs.x.ai/docs/api-reference
+  baseURL: https://api.x.ai/v1
+  tags:
+  - Language Models
+  properties:
+  - type: OpenAPI
+    url: openapi/xai-language-models-api-openapi.yml
+  - type: Documentation
+    url: https://docs.x.ai/docs/overview
+  - type: APIReference
+    url: https://docs.x.ai/docs/api-reference#chat-completions
+  - type: Documentation
+    url: https://docs.x.ai/docs/api-reference#responses
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/image-generations
+  - type: APIReference
+    url: https://docs.x.ai/docs/api-reference#image-generations
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/video-generation
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/voice
+  - type: AsyncAPI
+    url: asyncapi/xai-asyncapi.yml
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/embeddings
+  - type: Documentation
+    url: https://docs.x.ai/docs/api-reference#models
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/batch
+- aid: xai:xai-messages-api
+  name: xAI Messages API
+  description: The Messages API from xAI — 1 operation(s) for messages.
+  humanURL: https://docs.x.ai/docs/api-reference
+  baseURL: https://api.x.ai/v1
+  tags:
+  - Messages
+  properties:
+  - type: OpenAPI
+    url: openapi/xai-messages-api-openapi.yml
+  - type: Documentation
+    url: https://docs.x.ai/docs/overview
+  - type: APIReference
+    url: https://docs.x.ai/docs/api-reference#chat-completions
+  - type: Documentation
+    url: https://docs.x.ai/docs/api-reference#responses
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/image-generations
+  - type: APIReference
+    url: https://docs.x.ai/docs/api-reference#image-generations
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/video-generation
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/voice
+  - type: AsyncAPI
+    url: asyncapi/xai-asyncapi.yml
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/embeddings
+  - type: Documentation
+    url: https://docs.x.ai/docs/api-reference#models
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/batch
+- aid: xai:xai-models-api
+  name: xAI Models API
+  description: The Models API from xAI — 2 operation(s) for models.
+  humanURL: https://docs.x.ai/docs/api-reference
+  baseURL: https://api.x.ai/v1
+  tags:
+  - Models
+  properties:
+  - type: OpenAPI
+    url: openapi/xai-models-api-openapi.yml
+  - type: Documentation
+    url: https://docs.x.ai/docs/overview
+  - type: APIReference
+    url: https://docs.x.ai/docs/api-reference#chat-completions
+  - type: Documentation
+    url: https://docs.x.ai/docs/api-reference#responses
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/image-generations
+  - type: APIReference
+    url: https://docs.x.ai/docs/api-reference#image-generations
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/video-generation
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/voice
+  - type: AsyncAPI
+    url: asyncapi/xai-asyncapi.yml
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/embeddings
+  - type: Documentation
+    url: https://docs.x.ai/docs/api-reference#models
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/batch
+- aid: xai:xai-responses-api
+  name: xAI Responses API
+  description: The Responses API from xAI — 2 operation(s) for responses.
+  humanURL: https://docs.x.ai/docs/api-reference
+  baseURL: https://api.x.ai/v1
+  tags:
+  - Responses
+  properties:
+  - type: OpenAPI
+    url: openapi/xai-responses-api-openapi.yml
+  - type: Documentation
+    url: https://docs.x.ai/docs/overview
+  - type: APIReference
+    url: https://docs.x.ai/docs/api-reference#chat-completions
+  - type: Documentation
+    url: https://docs.x.ai/docs/api-reference#responses
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/image-generations
+  - type: APIReference
+    url: https://docs.x.ai/docs/api-reference#image-generations
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/video-generation
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/voice
+  - type: AsyncAPI
+    url: asyncapi/xai-asyncapi.yml
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/embeddings
+  - type: Documentation
+    url: https://docs.x.ai/docs/api-reference#models
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/batch
+- aid: xai:xai-tokenize-text-api
+  name: xAI Tokenize Text API
+  description: The Tokenize Text API from xAI — 1 operation(s) for tokenize text.
+  humanURL: https://docs.x.ai/docs/api-reference
+  baseURL: https://api.x.ai/v1
+  tags:
+  - Tokenize Text
+  properties:
+  - type: OpenAPI
+    url: openapi/xai-tokenize-text-api-openapi.yml
+  - type: Documentation
+    url: https://docs.x.ai/docs/overview
+  - type: APIReference
+    url: https://docs.x.ai/docs/api-reference#chat-completions
+  - type: Documentation
+    url: https://docs.x.ai/docs/api-reference#responses
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/image-generations
+  - type: APIReference
+    url: https://docs.x.ai/docs/api-reference#image-generations
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/video-generation
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/voice
+  - type: AsyncAPI
+    url: asyncapi/xai-asyncapi.yml
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/embeddings
+  - type: Documentation
+    url: https://docs.x.ai/docs/api-reference#models
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/batch
+- aid: xai:xai-video-generation-models-api
+  name: xAI Video Generation Models API
+  description: The Video Generation Models API from xAI — 2 operation(s) for video generation models.
+  humanURL: https://docs.x.ai/docs/api-reference
+  baseURL: https://api.x.ai/v1
+  tags:
+  - Video Generation Models
+  properties:
+  - type: OpenAPI
+    url: openapi/xai-video-generation-models-api-openapi.yml
+  - type: Documentation
+    url: https://docs.x.ai/docs/overview
+  - type: APIReference
+    url: https://docs.x.ai/docs/api-reference#chat-completions
+  - type: Documentation
+    url: https://docs.x.ai/docs/api-reference#responses
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/image-generations
+  - type: APIReference
+    url: https://docs.x.ai/docs/api-reference#image-generations
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/video-generation
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/voice
+  - type: AsyncAPI
+    url: asyncapi/xai-asyncapi.yml
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/embeddings
+  - type: Documentation
+    url: https://docs.x.ai/docs/api-reference#models
+  - type: Documentation
+    url: https://docs.x.ai/docs/guides/batch
+- aid: xai:xai-videos-api
+  name: xAI Videos API
+  description: The Videos API from xAI — 4 operation(s) for videos.
+  humanURL: https://docs.x.ai/docs/api-reference
+  baseURL: https://api.x.ai/v1
+  tags:
+  - Videos
+  properties:
+  - type: OpenAPI
+    url: openapi/xai-videos-api-openapi.yml
   - type: Documentation
     url: https://docs.x.ai/docs/overview
   - type: APIReference
