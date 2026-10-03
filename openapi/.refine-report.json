@@ -22,9 +22,7 @@
     "xai-video-generation-models-api-openapi.yml",
     "xai-videos-api-openapi.yml"
   ],
-  "archived": [
-    "deleted 1 superseded output(s) from the previous generation"
-  ],
+  "archived": [],
   "errors": [],
   "warnings": [],
   "notes": [
@@ -80,10 +78,25 @@
     "xai-openapi.json: declared missing tag: Tokenize Text",
     "xai-openapi.json: declared missing tag: Video Generation Models",
     "xai-openapi.json: declared missing tag: Videos",
-    "superseded outputs removed: xai-v1-api-openapi.yml",
-    "apis.yml register: written (+17 apis, 17 total)"
+    "apis.yml register: already-registered"
   ],
   "skipped": [
-    "xai-v1-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+    "xai-api-key-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "xai-chat-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "xai-complete-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "xai-completions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "xai-documents-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "xai-embedding-models-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "xai-embeddings-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "xai-files-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "xai-image-generation-models-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "xai-images-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "xai-language-models-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "xai-messages-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "xai-models-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "xai-responses-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "xai-tokenize-text-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "xai-video-generation-models-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "xai-videos-api-openapi.yml: previously refined output, superseded by openapi/_original/"
   ]
 }

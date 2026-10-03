@@ -56,6 +56,74 @@ paths:
       - bearerAuth: []
 components:
   schemas:
+    MessageTools:
+      type: object
+      required:
+      - name
+      - description
+      - input_schema
+      properties:
+        cache_control:
+          description: (Unsupported) Cache control.
+        description:
+          type: string
+          description: Description of the tool.
+        input_schema:
+          $ref: '#/components/schemas/MessageToolInputSchema'
+          description: Input schema allowed by the tool.
+        name:
+          type: string
+          description: Name of the tool.
+    MessageBody:
+      type: object
+      description: Anthropic compatible message body
+      required:
+      - role
+      - content
+      properties:
+        content:
+          $ref: '#/components/schemas/MessageContent'
+          description: The content message.
+        role:
+          type: string
+          description: The role that the message belongs to, `"system"` for system prompt, `"user"` for user prompt, and `"assistant"` for response from the model.
+    ToolResultContentBlock:
+      oneOf:
+      - type: object
+        description: Text content block.
+        required:
+        - text
+        - type
+        properties:
+          text:
+            type: string
+            description: The text content.
+          type:
+            type: string
+            enum:
+            - text
+      - type: object
+        description: Image content block.
+        required:
+        - source
+        - type
+        properties:
+          source:
+            $ref: '#/components/schemas/MessageImageContent'
+            description: Image source.
+          type:
+            type: string
+            enum:
+            - image
+      description: A single content block within a tool_result's array content.
+    SystemMessageContent:
+      oneOf:
+      - type: string
+        description: Text content of system prompt.
+      - type: array
+        items:
+          $ref: '#/components/schemas/SystemMessagePart'
+        description: An array of system prompt parts.
     MessageUsage:
       type: object
       required:
@@ -80,6 +148,70 @@ components:
           type: integer
           format: int32
           description: Number of output tokens used
+    MessageResponseContent:
+      oneOf:
+      - type: object
+        description: Text response from the model.
+        required:
+        - text
+        - type
+        properties:
+          text:
+            type: string
+          type:
+            type: string
+            enum:
+            - text
+      - type: object
+        description: Thinking response for the model
+        required:
+        - signature
+        - thinking
+        - type
+        properties:
+          signature:
+            type: string
+            description: Signature of the content
+          thinking:
+            type: string
+            description: Thinking content
+          type:
+            type: string
+            enum:
+            - thinking
+      - type: object
+        description: Redacted thinking response for the model
+        required:
+        - data
+        - type
+        properties:
+          data:
+            type: string
+            description: Signature of the content
+          type:
+            type: string
+            enum:
+            - redacted_thinking
+      - type: object
+        description: Request by the model to invoke a tool call.
+        required:
+        - id
+        - name
+        - input
+        - type
+        properties:
+          id:
+            type: string
+            description: Tool call ID.
+          input:
+            description: Input to the tool call follwing the `input_schema`.
+          name:
+            type: string
+            description: Name of the tool call to be used.
+          type:
+            type: string
+            enum:
+            - tool_use
     MessageResponse:
       type: object
       description: Response message for `/v1/messages`
@@ -123,66 +255,6 @@ components:
         usage:
           $ref: '#/components/schemas/MessageUsage'
           description: Token usage information.
-    ToolResultContentBlock:
-      oneOf:
-      - type: object
-        description: Text content block.
-        required:
-        - text
-        - type
-        properties:
-          text:
-            type: string
-            description: The text content.
-          type:
-            type: string
-            enum:
-            - text
-      - type: object
-        description: Image content block.
-        required:
-        - source
-        - type
-        properties:
-          source:
-            $ref: '#/components/schemas/MessageImageContent'
-            description: Image source.
-          type:
-            type: string
-            enum:
-            - image
-      description: A single content block within a tool_result's array content.
-    MessageBody:
-      type: object
-      description: Anthropic compatible message body
-      required:
-      - role
-      - content
-      properties:
-        content:
-          $ref: '#/components/schemas/MessageContent'
-          description: The content message.
-        role:
-          type: string
-          description: The role that the message belongs to, `"system"` for system prompt, `"user"` for user prompt, and `"assistant"` for response from the model.
-    MessageTools:
-      type: object
-      required:
-      - name
-      - description
-      - input_schema
-      properties:
-        cache_control:
-          description: (Unsupported) Cache control.
-        description:
-          type: string
-          description: Description of the tool.
-        input_schema:
-          $ref: '#/components/schemas/MessageToolInputSchema'
-          description: Input schema allowed by the tool.
-        name:
-          type: string
-          description: Name of the tool.
     MessageContentPart:
       oneOf:
       - type: object
@@ -333,6 +405,46 @@ components:
           url:
             type: string
             description: URL of the image.
+    MessageMetadata:
+      type: object
+      properties:
+        user_id:
+          type:
+          - string
+          - 'null'
+          description: A unique identifier representing your end-user, which can help xAI to monitor and detect abuse.
+    MessageToolInputSchema:
+      type: object
+      required:
+      - type
+      - properties
+      properties:
+        properties:
+          description: JSON-object of the tool input schema.
+        required:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+          description: Required properties of the tool input schema, if any.
+        type:
+          type: string
+          description: Type of the schema. This is always `"object"`.
+    SystemMessagePart:
+      type: object
+      required:
+      - type
+      - text
+      properties:
+        cache_control:
+          description: (Unsupported) Cache control.
+        text:
+          type: string
+          description: System prompt text.
+        type:
+          type: string
+          description: Type of the object. This is always `"text"`.
     MessageContent:
       oneOf:
       - type: string
@@ -375,36 +487,6 @@ components:
             enum:
             - tool
       description: Tool choice option.
-    SystemMessageContent:
-      oneOf:
-      - type: string
-        description: Text content of system prompt.
-      - type: array
-        items:
-          $ref: '#/components/schemas/SystemMessagePart'
-        description: An array of system prompt parts.
-    SystemMessagePart:
-      type: object
-      required:
-      - type
-      - text
-      properties:
-        cache_control:
-          description: (Unsupported) Cache control.
-        text:
-          type: string
-          description: System prompt text.
-        type:
-          type: string
-          description: Type of the object. This is always `"text"`.
-    MessageMetadata:
-      type: object
-      properties:
-        user_id:
-          type:
-          - string
-          - 'null'
-          description: A unique identifier representing your end-user, which can help xAI to monitor and detect abuse.
     MessageRequest:
       type: object
       description: Request message for `/v1/messages`
@@ -480,88 +562,6 @@ components:
           default: 1
           maximum: 1
           exclusiveMinimum: 0
-    MessageResponseContent:
-      oneOf:
-      - type: object
-        description: Text response from the model.
-        required:
-        - text
-        - type
-        properties:
-          text:
-            type: string
-          type:
-            type: string
-            enum:
-            - text
-      - type: object
-        description: Thinking response for the model
-        required:
-        - signature
-        - thinking
-        - type
-        properties:
-          signature:
-            type: string
-            description: Signature of the content
-          thinking:
-            type: string
-            description: Thinking content
-          type:
-            type: string
-            enum:
-            - thinking
-      - type: object
-        description: Redacted thinking response for the model
-        required:
-        - data
-        - type
-        properties:
-          data:
-            type: string
-            description: Signature of the content
-          type:
-            type: string
-            enum:
-            - redacted_thinking
-      - type: object
-        description: Request by the model to invoke a tool call.
-        required:
-        - id
-        - name
-        - input
-        - type
-        properties:
-          id:
-            type: string
-            description: Tool call ID.
-          input:
-            description: Input to the tool call follwing the `input_schema`.
-          name:
-            type: string
-            description: Name of the tool call to be used.
-          type:
-            type: string
-            enum:
-            - tool_use
-    MessageToolInputSchema:
-      type: object
-      required:
-      - type
-      - properties
-      properties:
-        properties:
-          description: JSON-object of the tool input schema.
-        required:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-          description: Required properties of the tool input schema, if any.
-        type:
-          type: string
-          description: Type of the schema. This is always `"object"`.
   securitySchemes:
     bearerAuth:
       type: http

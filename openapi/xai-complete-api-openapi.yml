@@ -52,14 +52,6 @@ paths:
       - bearerAuth: []
 components:
   schemas:
-    MessageMetadata:
-      type: object
-      properties:
-        user_id:
-          type:
-          - string
-          - 'null'
-          description: A unique identifier representing your end-user, which can help xAI to monitor and detect abuse.
     CompleteResponse:
       type: object
       description: (Legacy) Anthropic compatible complete response on `/v1/complete` endpoint.
@@ -86,6 +78,14 @@ components:
         type:
           type: string
           description: Completion response object type. This is always `"completion"`.
+    MessageMetadata:
+      type: object
+      properties:
+        user_id:
+          type:
+          - string
+          - 'null'
+          description: A unique identifier representing your end-user, which can help xAI to monitor and detect abuse.
     CompleteRequest:
       type: object
       description: (Legacy) Anthropic compatible complete request on `/v1/complete` endpoint.

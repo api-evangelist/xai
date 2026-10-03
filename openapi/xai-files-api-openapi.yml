@@ -179,6 +179,12 @@ paths:
       - bearerAuth: []
 components:
   schemas:
+    ContentFormat:
+      type: string
+      description: Format of the downloaded file content.
+      enum:
+      - original
+      - text
     File:
       type: object
       description: An uploaded file.
@@ -215,21 +221,6 @@ components:
         purpose:
           type: string
           description: The intended purpose of the uploaded file. Only included for OAI compatability.
-    ListFilesResponse:
-      type: object
-      required:
-      - data
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/File'
-          description: List of files.
-        pagination_token:
-          type:
-          - string
-          - 'null'
-          description: Pagination token to use with next request.
     DeleteFileResponse:
       type: object
       required:
@@ -246,12 +237,6 @@ components:
         object:
           type: string
           description: The object type, which is always "file". Only included for compatibility.
-    ContentFormat:
-      type: string
-      description: Format of the downloaded file content.
-      enum:
-      - original
-      - text
     UploadFileMultipartRequest:
       type: object
       description: 'Multipart form fields accepted by `POST /v1/files`. The `expires_after`
@@ -298,6 +283,21 @@ components:
             does not enforce or interpret this field. Setting `"assistants"`
 
             is the conventional choice.'
+    ListFilesResponse:
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/File'
+          description: List of files.
+        pagination_token:
+          type:
+          - string
+          - 'null'
+          description: Pagination token to use with next request.
   securitySchemes:
     bearerAuth:
       type: http

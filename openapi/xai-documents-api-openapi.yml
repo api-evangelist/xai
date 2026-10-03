@@ -47,45 +47,6 @@ paths:
       - bearerAuth: []
 components:
   schemas:
-    RetrievalMode:
-      oneOf:
-      - allOf:
-        - $ref: '#/components/schemas/HybridRetrieval'
-          description: Hybrid search combining keyword and semantic search.
-        - type: object
-          required:
-          - type
-          properties:
-            type:
-              type: string
-              enum:
-              - hybrid
-        description: Hybrid search combining keyword and semantic search.
-      - allOf:
-        - $ref: '#/components/schemas/SemanticRetrieval'
-          description: Semantic search using dense embeddings.
-        - type: object
-          required:
-          - type
-          properties:
-            type:
-              type: string
-              enum:
-              - semantic
-        description: Semantic search using dense embeddings.
-      - allOf:
-        - $ref: '#/components/schemas/KeywordRetrieval'
-          description: Keyword search using sparse embeddings.
-        - type: object
-          required:
-          - type
-          properties:
-            type:
-              type: string
-              enum:
-              - keyword
-        description: Keyword search using sparse embeddings.
-      description: Retrieval mode configuration for document search.
     HybridRetrieval:
       type: object
       description: Document search using a combination of keyword and semantic search.
@@ -103,63 +64,45 @@ components:
           description: 'Additional multiplier to requested search limit.
 
             Valid range is [1, 100]. Defaults to 1 when unset.'
-    HybridReranker:
-      oneOf:
-      - allOf:
-        - $ref: '#/components/schemas/RerankerModel'
-          description: Use a reranker model to perform the reranking.
-        - type: object
-          required:
-          - type
-          properties:
-            type:
-              type: string
-              enum:
-              - reranker_model
-        description: Use a reranker model to perform the reranking.
-      - allOf:
-        - $ref: '#/components/schemas/ReciprocalRankFusion'
-          description: Use RRF to perform the reranking.
-        - type: object
-          required:
-          - type
-          properties:
-            type:
-              type: string
-              enum:
-              - rrf
-        description: Use RRF to perform the reranking.
-      description: Reranker configuration for hybrid retrieval.
-    DocumentsSource:
+    KeywordRetrieval:
       type: object
-      description: DocumentsSource defines the source of documents to search over.
-      required:
-      - collection_ids
+      description: Document search using keyword matching (sparse embeddings).
       properties:
-        collection_ids:
+        reranker:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/RerankerModel'
+            description: Optional, but always used when doing search across multiple collections.
+    GroupBy:
+      type: object
+      description: Group search results by metadata key(s) and keep top-k per group.
+      required:
+      - keys
+      properties:
+        aggregate:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/GroupByAggregate'
+            description: Aggregation function per group. Defaults to MinK(k=1, keys=["#score"]).
+        keys:
           type: array
           items:
             type: string
-          description: The collection IDs to search in.
-        rag_pipeline:
-          oneOf:
-          - type: 'null'
-          - $ref: '#/components/schemas/RagPipeline'
-            description: Which RAG pipeline to use. Defaults to `chroma_db` when unset.
-    RerankerModel:
-      type: object
-      description: Configuration for model-based reranking.
-      properties:
-        instructions:
-          type:
-          - string
-          - 'null'
-          description: Instructions for the reranking model. Defaults to generic reranking instructions.
-        model:
-          type:
-          - string
-          - 'null'
-          description: The model to use for reranking. Defaults to standard reranker model.
+          description: 'Metadata key(s) to group results by (e.g. "category", "department").
+
+            At least one key is required.'
+    RagPipeline:
+      type: string
+      enum:
+      - chroma_db
+      - es
+    RankingMetric:
+      type: string
+      description: 'Deprecated: Metric now comes from collection creation.'
+      enum:
+      - RANKING_METRIC_UNKNOWN
+      - RANKING_METRIC_L2_DISTANCE
+      - RANKING_METRIC_COSINE_SIMILARITY
     SearchMatch:
       type: object
       description: SearchMatch defines a single match from a search request.
@@ -200,83 +143,45 @@ components:
           type: number
           format: float
           description: The relevance score.
-    ReciprocalRankFusion:
-      type: object
-      description: Configuration for reciprocal rank fusion (RRF) reranking.
-      properties:
-        embedding_weight:
-          type: number
-          format: float
-          description: Weight for embedding (dense) search results. Should be between 0 and 1. Defaults to 0.5.
-        k:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          description: The RRF constant k used in the reciprocal rank fusion formula. Defaults to 60.
-        text_weight:
-          type: number
-          format: float
-          description: Weight for keyword (sparse) search results. Should be between 0 and 1. Defaults to 0.5.
-    RagPipeline:
-      type: string
-      enum:
-      - chroma_db
-      - es
-    GroupBy:
-      type: object
-      description: Group search results by metadata key(s) and keep top-k per group.
-      required:
-      - keys
-      properties:
-        aggregate:
-          oneOf:
-          - type: 'null'
-          - $ref: '#/components/schemas/GroupByAggregate'
-            description: Aggregation function per group. Defaults to MinK(k=1, keys=["#score"]).
-        keys:
-          type: array
-          items:
-            type: string
-          description: 'Metadata key(s) to group results by (e.g. "category", "department").
-
-            At least one key is required.'
-    KeywordRetrieval:
-      type: object
-      description: Document search using keyword matching (sparse embeddings).
-      properties:
-        reranker:
-          oneOf:
-          - type: 'null'
-          - $ref: '#/components/schemas/RerankerModel'
-            description: Optional, but always used when doing search across multiple collections.
-    RankingMetric:
-      type: string
-      description: 'Deprecated: Metric now comes from collection creation.'
-      enum:
-      - RANKING_METRIC_UNKNOWN
-      - RANKING_METRIC_L2_DISTANCE
-      - RANKING_METRIC_COSINE_SIMILARITY
-    SemanticRetrieval:
-      type: object
-      description: Document search using semantic similarity (dense embeddings).
-      properties:
-        reranker:
-          oneOf:
-          - type: 'null'
-          - $ref: '#/components/schemas/RerankerModel'
-            description: Optional, but always used when doing search across multiple collections.
-    SearchResponse:
-      type: object
-      description: SearchResponse defines the response to a search request.
-      required:
-      - matches
-      properties:
-        matches:
-          type: array
-          items:
-            $ref: '#/components/schemas/SearchMatch'
-          description: The search matches.
+    RetrievalMode:
+      oneOf:
+      - allOf:
+        - $ref: '#/components/schemas/HybridRetrieval'
+          description: Hybrid search combining keyword and semantic search.
+        - type: object
+          required:
+          - type
+          properties:
+            type:
+              type: string
+              enum:
+              - hybrid
+        description: Hybrid search combining keyword and semantic search.
+      - allOf:
+        - $ref: '#/components/schemas/SemanticRetrieval'
+          description: Semantic search using dense embeddings.
+        - type: object
+          required:
+          - type
+          properties:
+            type:
+              type: string
+              enum:
+              - semantic
+        description: Semantic search using dense embeddings.
+      - allOf:
+        - $ref: '#/components/schemas/KeywordRetrieval'
+          description: Keyword search using sparse embeddings.
+        - type: object
+          required:
+          - type
+          properties:
+            type:
+              type: string
+              enum:
+              - keyword
+        description: Keyword search using sparse embeddings.
+      description: Retrieval mode configuration for document search.
     SearchRequest:
       type: object
       description: SearchRequest defines the request to search for documents.
@@ -390,6 +295,101 @@ components:
                   type: string
                 description: Key(s) to sort by within each group.
       description: Aggregation function to apply within each group.
+    RerankerModel:
+      type: object
+      description: Configuration for model-based reranking.
+      properties:
+        instructions:
+          type:
+          - string
+          - 'null'
+          description: Instructions for the reranking model. Defaults to generic reranking instructions.
+        model:
+          type:
+          - string
+          - 'null'
+          description: The model to use for reranking. Defaults to standard reranker model.
+    HybridReranker:
+      oneOf:
+      - allOf:
+        - $ref: '#/components/schemas/RerankerModel'
+          description: Use a reranker model to perform the reranking.
+        - type: object
+          required:
+          - type
+          properties:
+            type:
+              type: string
+              enum:
+              - reranker_model
+        description: Use a reranker model to perform the reranking.
+      - allOf:
+        - $ref: '#/components/schemas/ReciprocalRankFusion'
+          description: Use RRF to perform the reranking.
+        - type: object
+          required:
+          - type
+          properties:
+            type:
+              type: string
+              enum:
+              - rrf
+        description: Use RRF to perform the reranking.
+      description: Reranker configuration for hybrid retrieval.
+    DocumentsSource:
+      type: object
+      description: DocumentsSource defines the source of documents to search over.
+      required:
+      - collection_ids
+      properties:
+        collection_ids:
+          type: array
+          items:
+            type: string
+          description: The collection IDs to search in.
+        rag_pipeline:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/RagPipeline'
+            description: Which RAG pipeline to use. Defaults to `chroma_db` when unset.
+    ReciprocalRankFusion:
+      type: object
+      description: Configuration for reciprocal rank fusion (RRF) reranking.
+      properties:
+        embedding_weight:
+          type: number
+          format: float
+          description: Weight for embedding (dense) search results. Should be between 0 and 1. Defaults to 0.5.
+        k:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: The RRF constant k used in the reciprocal rank fusion formula. Defaults to 60.
+        text_weight:
+          type: number
+          format: float
+          description: Weight for keyword (sparse) search results. Should be between 0 and 1. Defaults to 0.5.
+    SemanticRetrieval:
+      type: object
+      description: Document search using semantic similarity (dense embeddings).
+      properties:
+        reranker:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/RerankerModel'
+            description: Optional, but always used when doing search across multiple collections.
+    SearchResponse:
+      type: object
+      description: SearchResponse defines the response to a search request.
+      required:
+      - matches
+      properties:
+        matches:
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchMatch'
+          description: The search matches.
   securitySchemes:
     bearerAuth:
       type: http

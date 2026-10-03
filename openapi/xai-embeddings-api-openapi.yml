@@ -49,32 +49,20 @@ paths:
       - bearerAuth: []
 components:
   schemas:
-    EmbeddingContent:
-      oneOf:
-      - type: string
-        description: Embedding in base64 string.
-      - type: array
-        items:
-          type: number
-          format: float
-        description: Embedding as an array of floats.
-    Embedding:
+    EmbeddingUsage:
       type: object
       required:
-      - index
-      - embedding
-      - object
+      - prompt_tokens
+      - total_tokens
       properties:
-        embedding:
-          $ref: '#/components/schemas/EmbeddingContent'
-          description: Embedding content.
-        index:
+        prompt_tokens:
           type: integer
           format: int32
-          description: Index of the embedding object in the data list.
-        object:
-          type: string
-          description: The object type, which is always `"embedding"`.
+          description: Prompt token used.
+        total_tokens:
+          type: integer
+          format: int32
+          description: Total token used.
     EmbeddingResponse:
       type: object
       required:
@@ -142,20 +130,32 @@ components:
                 type: integer
                 format: int32
             description: An array of tokens in integers to be embedded
-    EmbeddingUsage:
+    EmbeddingContent:
+      oneOf:
+      - type: string
+        description: Embedding in base64 string.
+      - type: array
+        items:
+          type: number
+          format: float
+        description: Embedding as an array of floats.
+    Embedding:
       type: object
       required:
-      - prompt_tokens
-      - total_tokens
+      - index
+      - embedding
+      - object
       properties:
-        prompt_tokens:
+        embedding:
+          $ref: '#/components/schemas/EmbeddingContent'
+          description: Embedding content.
+        index:
           type: integer
           format: int32
-          description: Prompt token used.
-        total_tokens:
-          type: integer
-          format: int32
-          description: Total token used.
+          description: Index of the embedding object in the data list.
+        object:
+          type: string
+          description: The object type, which is always `"embedding"`.
     EmbeddingRequest:
       type: object
       properties:
