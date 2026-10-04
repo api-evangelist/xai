@@ -85,20 +85,6 @@ paths:
       - bearerAuth: []
 components:
   schemas:
-    ListModelsResponse:
-      type: object
-      required:
-      - data
-      - object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Model'
-          description: A list of models with with minimalized information.
-        object:
-          type: string
-          description: The object type of `data` field, which is always `"list"`.
     Model:
       type: object
       description: Same as `LanguageModel` but fully compliant with the OpenAI API.
@@ -121,6 +107,20 @@ components:
         owned_by:
           type: string
           description: Owner of the model.
+    ListModelsResponse:
+      type: object
+      required:
+      - data
+      - object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Model'
+          description: A list of models with with minimalized information.
+        object:
+          type: string
+          description: The object type of `data` field, which is always `"list"`.
   securitySchemes:
     bearerAuth:
       type: http

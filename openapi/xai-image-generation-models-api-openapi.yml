@@ -78,6 +78,16 @@ paths:
       - bearerAuth: []
 components:
   schemas:
+    ListImageGenerationModelsResponse:
+      type: object
+      required:
+      - models
+      properties:
+        models:
+          type: array
+          items:
+            $ref: '#/components/schemas/ImageGenerationModel'
+          description: Array of available image generation models.
     ImageGenerationModel:
       type: object
       description: Details of an image generation model
@@ -135,16 +145,6 @@ components:
         version:
           type: string
           description: Version of the model.
-    ListImageGenerationModelsResponse:
-      type: object
-      required:
-      - models
-      properties:
-        models:
-          type: array
-          items:
-            $ref: '#/components/schemas/ImageGenerationModel'
-          description: Array of available image generation models.
   securitySchemes:
     bearerAuth:
       type: http

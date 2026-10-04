@@ -63,29 +63,32 @@ components:
           type: integer
           format: int32
           description: Total token used.
-    EmbeddingResponse:
+    Embedding:
       type: object
       required:
+      - index
+      - embedding
       - object
-      - model
-      - data
       properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Embedding'
-          description: A list of embedding objects.
-        model:
-          type: string
-          description: Model ID used to create embedding.
+        embedding:
+          $ref: '#/components/schemas/EmbeddingContent'
+          description: Embedding content.
+        index:
+          type: integer
+          format: int32
+          description: Index of the embedding object in the data list.
         object:
           type: string
-          description: The object type of `data` field, which is always `"list"`.
-        usage:
-          oneOf:
-          - type: 'null'
-          - $ref: '#/components/schemas/EmbeddingUsage'
-            description: Token usage information.
+          description: The object type, which is always `"embedding"`.
+    EmbeddingContent:
+      oneOf:
+      - type: string
+        description: Embedding in base64 string.
+      - type: array
+        items:
+          type: number
+          format: float
+        description: Embedding as an array of floats.
     EmbeddingInput:
       oneOf:
       - type: object
@@ -130,32 +133,6 @@ components:
                 type: integer
                 format: int32
             description: An array of tokens in integers to be embedded
-    EmbeddingContent:
-      oneOf:
-      - type: string
-        description: Embedding in base64 string.
-      - type: array
-        items:
-          type: number
-          format: float
-        description: Embedding as an array of floats.
-    Embedding:
-      type: object
-      required:
-      - index
-      - embedding
-      - object
-      properties:
-        embedding:
-          $ref: '#/components/schemas/EmbeddingContent'
-          description: Embedding content.
-        index:
-          type: integer
-          format: int32
-          description: Index of the embedding object in the data list.
-        object:
-          type: string
-          description: The object type, which is always `"embedding"`.
     EmbeddingRequest:
       type: object
       properties:
@@ -187,6 +164,29 @@ components:
           - string
           - 'null'
           description: A unique identifier representing your end-user, which can help xAI to monitor and detect abuse.
+    EmbeddingResponse:
+      type: object
+      required:
+      - object
+      - model
+      - data
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Embedding'
+          description: A list of embedding objects.
+        model:
+          type: string
+          description: Model ID used to create embedding.
+        object:
+          type: string
+          description: The object type of `data` field, which is always `"list"`.
+        usage:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/EmbeddingUsage'
+            description: Token usage information.
   securitySchemes:
     bearerAuth:
       type: http

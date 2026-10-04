@@ -179,12 +179,6 @@ paths:
       - bearerAuth: []
 components:
   schemas:
-    ContentFormat:
-      type: string
-      description: Format of the downloaded file content.
-      enum:
-      - original
-      - text
     File:
       type: object
       description: An uploaded file.
@@ -221,22 +215,6 @@ components:
         purpose:
           type: string
           description: The intended purpose of the uploaded file. Only included for OAI compatability.
-    DeleteFileResponse:
-      type: object
-      required:
-      - id
-      - deleted
-      - object
-      properties:
-        deleted:
-          type: boolean
-          description: Whether the file was deleted.
-        id:
-          type: string
-          description: The ID of the file.
-        object:
-          type: string
-          description: The object type, which is always "file". Only included for compatibility.
     UploadFileMultipartRequest:
       type: object
       description: 'Multipart form fields accepted by `POST /v1/files`. The `expires_after`
@@ -283,6 +261,12 @@ components:
             does not enforce or interpret this field. Setting `"assistants"`
 
             is the conventional choice.'
+    ContentFormat:
+      type: string
+      description: Format of the downloaded file content.
+      enum:
+      - original
+      - text
     ListFilesResponse:
       type: object
       required:
@@ -298,6 +282,22 @@ components:
           - string
           - 'null'
           description: Pagination token to use with next request.
+    DeleteFileResponse:
+      type: object
+      required:
+      - id
+      - deleted
+      - object
+      properties:
+        deleted:
+          type: boolean
+          description: Whether the file was deleted.
+        id:
+          type: string
+          description: The ID of the file.
+        object:
+          type: string
+          description: The object type, which is always "file". Only included for compatibility.
   securitySchemes:
     bearerAuth:
       type: http

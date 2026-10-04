@@ -77,6 +77,16 @@ paths:
       - bearerAuth: []
 components:
   schemas:
+    ListEmbeddingModelsResponse:
+      type: object
+      required:
+      - models
+      properties:
+        models:
+          type: array
+          items:
+            $ref: '#/components/schemas/EmbeddingModel'
+          description: Array of available embedding models.
     EmbeddingModel:
       type: object
       description: Details of an embedding model
@@ -135,16 +145,6 @@ components:
         version:
           type: string
           description: Version of the model.
-    ListEmbeddingModelsResponse:
-      type: object
-      required:
-      - models
-      properties:
-        models:
-          type: array
-          items:
-            $ref: '#/components/schemas/EmbeddingModel'
-          description: Array of available embedding models.
   securitySchemes:
     bearerAuth:
       type: http
