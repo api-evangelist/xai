@@ -52,7 +52,7 @@ tags_raw:
   - Image Generation
   - Video Generation
 created: '2026-05-08'
-modified: '2026-05-29'
+modified: '2026-10-06'
 specificationVersion: '0.23'
 apis:
 - aid: xai:xai-api-key-api
@@ -610,6 +610,8 @@ apis:
   - type: Documentation
     url: https://docs.x.ai/docs/guides/batch
 common:
+  - url: https://x.ai/news
+    type: Blog
   - type: AgenticAccess
     url: agentic-access/xai-agentic-access.yml
   - type: TrustCenter
