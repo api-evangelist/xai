@@ -179,42 +179,6 @@ paths:
       - bearerAuth: []
 components:
   schemas:
-    File:
-      type: object
-      description: An uploaded file.
-      required:
-      - bytes
-      - created_at
-      - filename
-      - id
-      - object
-      properties:
-        bytes:
-          type: integer
-          format: int64
-          description: The size of the file, in bytes.
-        created_at:
-          type: integer
-          format: int64
-          description: The Unix timestamp (in seconds) for file creation time.
-        expires_at:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: The Unix timestamp (in seconds) for file expiry time. null if file does not expire.
-        filename:
-          type: string
-          description: The name of the file.
-        id:
-          type: string
-          description: The file identifier, which can be used in other API requests.
-        object:
-          type: string
-          description: The object type, which is always `file`. Only included for compatability.
-        purpose:
-          type: string
-          description: The intended purpose of the uploaded file. Only included for OAI compatability.
     UploadFileMultipartRequest:
       type: object
       description: 'Multipart form fields accepted by `POST /v1/files`. The `expires_after`
@@ -261,12 +225,6 @@ components:
             does not enforce or interpret this field. Setting `"assistants"`
 
             is the conventional choice.'
-    ContentFormat:
-      type: string
-      description: Format of the downloaded file content.
-      enum:
-      - original
-      - text
     ListFilesResponse:
       type: object
       required:
@@ -282,6 +240,48 @@ components:
           - string
           - 'null'
           description: Pagination token to use with next request.
+    ContentFormat:
+      type: string
+      description: Format of the downloaded file content.
+      enum:
+      - original
+      - text
+    File:
+      type: object
+      description: An uploaded file.
+      required:
+      - bytes
+      - created_at
+      - filename
+      - id
+      - object
+      properties:
+        bytes:
+          type: integer
+          format: int64
+          description: The size of the file, in bytes.
+        created_at:
+          type: integer
+          format: int64
+          description: The Unix timestamp (in seconds) for file creation time.
+        expires_at:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: The Unix timestamp (in seconds) for file expiry time. null if file does not expire.
+        filename:
+          type: string
+          description: The name of the file.
+        id:
+          type: string
+          description: The file identifier, which can be used in other API requests.
+        object:
+          type: string
+          description: The object type, which is always `file`. Only included for compatability.
+        purpose:
+          type: string
+          description: The intended purpose of the uploaded file. Only included for OAI compatability.
     DeleteFileResponse:
       type: object
       required:

@@ -47,6 +47,80 @@ paths:
       - bearerAuth: []
 components:
   schemas:
+    SemanticRetrieval:
+      type: object
+      description: Document search using semantic similarity (dense embeddings).
+      properties:
+        reranker:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/RerankerModel'
+            description: Optional, but always used when doing search across multiple collections.
+    SearchMatch:
+      type: object
+      description: SearchMatch defines a single match from a search request.
+      required:
+      - file_id
+      - chunk_id
+      - chunk_content
+      - score
+      - collection_ids
+      - fields
+      properties:
+        chunk_content:
+          type: string
+          description: The chunk content.
+        chunk_id:
+          type: string
+          description: The chunk ID.
+        collection_ids:
+          type: array
+          items:
+            type: string
+          description: The collection ID(s).
+        fields:
+          type: object
+          description: Metadata fields belonging to the document of this chunk.
+          additionalProperties:
+            type: string
+          propertyNames:
+            type: string
+        file_id:
+          type: string
+          description: The document ID.
+        page_number:
+          type: integer
+          format: int32
+          description: The dominant page number this chunk belongs to (0 for single-page docs).
+        score:
+          type: number
+          format: float
+          description: The relevance score.
+    RerankerModel:
+      type: object
+      description: Configuration for model-based reranking.
+      properties:
+        instructions:
+          type:
+          - string
+          - 'null'
+          description: Instructions for the reranking model. Defaults to generic reranking instructions.
+        model:
+          type:
+          - string
+          - 'null'
+          description: The model to use for reranking. Defaults to standard reranker model.
+    SearchResponse:
+      type: object
+      description: SearchResponse defines the response to a search request.
+      required:
+      - matches
+      properties:
+        matches:
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchMatch'
+          description: The search matches.
     RetrievalMode:
       oneOf:
       - allOf:
@@ -86,63 +160,51 @@ components:
               - keyword
         description: Keyword search using sparse embeddings.
       description: Retrieval mode configuration for document search.
-    DocumentsSource:
-      type: object
-      description: DocumentsSource defines the source of documents to search over.
-      required:
-      - collection_ids
-      properties:
-        collection_ids:
-          type: array
-          items:
-            type: string
-          description: The collection IDs to search in.
-        rag_pipeline:
-          oneOf:
-          - type: 'null'
-          - $ref: '#/components/schemas/RagPipeline'
-            description: Which RAG pipeline to use. Defaults to `chroma_db` when unset.
-    GroupBy:
-      type: object
-      description: Group search results by metadata key(s) and keep top-k per group.
-      required:
-      - keys
-      properties:
-        aggregate:
-          oneOf:
-          - type: 'null'
-          - $ref: '#/components/schemas/GroupByAggregate'
-            description: Aggregation function per group. Defaults to MinK(k=1, keys=["#score"]).
-        keys:
-          type: array
-          items:
-            type: string
-          description: 'Metadata key(s) to group results by (e.g. "category", "department").
-
-            At least one key is required.'
-    SemanticRetrieval:
-      type: object
-      description: Document search using semantic similarity (dense embeddings).
-      properties:
-        reranker:
-          oneOf:
-          - type: 'null'
-          - $ref: '#/components/schemas/RerankerModel'
-            description: Optional, but always used when doing search across multiple collections.
-    RerankerModel:
-      type: object
-      description: Configuration for model-based reranking.
-      properties:
-        instructions:
-          type:
-          - string
-          - 'null'
-          description: Instructions for the reranking model. Defaults to generic reranking instructions.
-        model:
-          type:
-          - string
-          - 'null'
-          description: The model to use for reranking. Defaults to standard reranker model.
+    GroupByAggregate:
+      oneOf:
+      - type: object
+        description: Keep the k records with the smallest values (best scores).
+        required:
+        - min_k
+        properties:
+          min_k:
+            type: object
+            description: Keep the k records with the smallest values (best scores).
+            required:
+            - keys
+            - k
+            properties:
+              k:
+                type: integer
+                format: int32
+                description: Number of records to keep per group. Must be >= 1.
+              keys:
+                type: array
+                items:
+                  type: string
+                description: Key(s) to sort by within each group. Use "#score" for relevance score.
+      - type: object
+        description: Keep the k records with the largest values.
+        required:
+        - max_k
+        properties:
+          max_k:
+            type: object
+            description: Keep the k records with the largest values.
+            required:
+            - keys
+            - k
+            properties:
+              k:
+                type: integer
+                format: int32
+                description: Number of records to keep per group. Must be >= 1.
+              keys:
+                type: array
+                items:
+                  type: string
+                description: Key(s) to sort by within each group.
+      description: Aggregation function to apply within each group.
     SearchRequest:
       type: object
       description: SearchRequest defines the request to search for documents.
@@ -211,91 +273,24 @@ components:
         source:
           $ref: '#/components/schemas/DocumentsSource'
           description: The source to query.
-    GroupByAggregate:
-      oneOf:
-      - type: object
-        description: Keep the k records with the smallest values (best scores).
-        required:
-        - min_k
-        properties:
-          min_k:
-            type: object
-            description: Keep the k records with the smallest values (best scores).
-            required:
-            - keys
-            - k
-            properties:
-              k:
-                type: integer
-                format: int32
-                description: Number of records to keep per group. Must be >= 1.
-              keys:
-                type: array
-                items:
-                  type: string
-                description: Key(s) to sort by within each group. Use "#score" for relevance score.
-      - type: object
-        description: Keep the k records with the largest values.
-        required:
-        - max_k
-        properties:
-          max_k:
-            type: object
-            description: Keep the k records with the largest values.
-            required:
-            - keys
-            - k
-            properties:
-              k:
-                type: integer
-                format: int32
-                description: Number of records to keep per group. Must be >= 1.
-              keys:
-                type: array
-                items:
-                  type: string
-                description: Key(s) to sort by within each group.
-      description: Aggregation function to apply within each group.
-    SearchMatch:
+    ReciprocalRankFusion:
       type: object
-      description: SearchMatch defines a single match from a search request.
-      required:
-      - file_id
-      - chunk_id
-      - chunk_content
-      - score
-      - collection_ids
-      - fields
+      description: Configuration for reciprocal rank fusion (RRF) reranking.
       properties:
-        chunk_content:
-          type: string
-          description: The chunk content.
-        chunk_id:
-          type: string
-          description: The chunk ID.
-        collection_ids:
-          type: array
-          items:
-            type: string
-          description: The collection ID(s).
-        fields:
-          type: object
-          description: Metadata fields belonging to the document of this chunk.
-          additionalProperties:
-            type: string
-          propertyNames:
-            type: string
-        file_id:
-          type: string
-          description: The document ID.
-        page_number:
-          type: integer
-          format: int32
-          description: The dominant page number this chunk belongs to (0 for single-page docs).
-        score:
+        embedding_weight:
           type: number
           format: float
-          description: The relevance score.
+          description: Weight for embedding (dense) search results. Should be between 0 and 1. Defaults to 0.5.
+        k:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: The RRF constant k used in the reciprocal rank fusion formula. Defaults to 60.
+        text_weight:
+          type: number
+          format: float
+          description: Weight for keyword (sparse) search results. Should be between 0 and 1. Defaults to 0.5.
     KeywordRetrieval:
       type: object
       description: Document search using keyword matching (sparse embeddings).
@@ -305,17 +300,46 @@ components:
           - type: 'null'
           - $ref: '#/components/schemas/RerankerModel'
             description: Optional, but always used when doing search across multiple collections.
-    SearchResponse:
+    RagPipeline:
+      type: string
+      enum:
+      - chroma_db
+      - es
+    GroupBy:
       type: object
-      description: SearchResponse defines the response to a search request.
+      description: Group search results by metadata key(s) and keep top-k per group.
       required:
-      - matches
+      - keys
       properties:
-        matches:
+        aggregate:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/GroupByAggregate'
+            description: Aggregation function per group. Defaults to MinK(k=1, keys=["#score"]).
+        keys:
           type: array
           items:
-            $ref: '#/components/schemas/SearchMatch'
-          description: The search matches.
+            type: string
+          description: 'Metadata key(s) to group results by (e.g. "category", "department").
+
+            At least one key is required.'
+    HybridRetrieval:
+      type: object
+      description: Document search using a combination of keyword and semantic search.
+      properties:
+        reranker:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/HybridReranker'
+            description: Which reranker to use to limit results to the desired value.
+        search_multiplier:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: 'Additional multiplier to requested search limit.
+
+            Valid range is [1, 100]. Defaults to 1 when unset.'
     HybridReranker:
       oneOf:
       - allOf:
@@ -343,29 +367,22 @@ components:
               - rrf
         description: Use RRF to perform the reranking.
       description: Reranker configuration for hybrid retrieval.
-    RagPipeline:
-      type: string
-      enum:
-      - chroma_db
-      - es
-    ReciprocalRankFusion:
+    DocumentsSource:
       type: object
-      description: Configuration for reciprocal rank fusion (RRF) reranking.
+      description: DocumentsSource defines the source of documents to search over.
+      required:
+      - collection_ids
       properties:
-        embedding_weight:
-          type: number
-          format: float
-          description: Weight for embedding (dense) search results. Should be between 0 and 1. Defaults to 0.5.
-        k:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          description: The RRF constant k used in the reciprocal rank fusion formula. Defaults to 60.
-        text_weight:
-          type: number
-          format: float
-          description: Weight for keyword (sparse) search results. Should be between 0 and 1. Defaults to 0.5.
+        collection_ids:
+          type: array
+          items:
+            type: string
+          description: The collection IDs to search in.
+        rag_pipeline:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/RagPipeline'
+            description: Which RAG pipeline to use. Defaults to `chroma_db` when unset.
     RankingMetric:
       type: string
       description: 'Deprecated: Metric now comes from collection creation.'
@@ -373,23 +390,6 @@ components:
       - RANKING_METRIC_UNKNOWN
       - RANKING_METRIC_L2_DISTANCE
       - RANKING_METRIC_COSINE_SIMILARITY
-    HybridRetrieval:
-      type: object
-      description: Document search using a combination of keyword and semantic search.
-      properties:
-        reranker:
-          oneOf:
-          - type: 'null'
-          - $ref: '#/components/schemas/HybridReranker'
-            description: Which reranker to use to limit results to the desired value.
-        search_multiplier:
-          type:
-          - integer
-          - 'null'
-          format: int32
-          description: 'Additional multiplier to requested search limit.
-
-            Valid range is [1, 100]. Defaults to 1 when unset.'
   securitySchemes:
     bearerAuth:
       type: http

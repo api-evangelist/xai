@@ -124,16 +124,6 @@ paths:
       - bearerAuth: []
 components:
   schemas:
-    ListLanguageModelsResponse:
-      type: object
-      required:
-      - models
-      properties:
-        models:
-          type: array
-          items:
-            $ref: '#/components/schemas/LanguageModel'
-          description: Array of available language models.
     LanguageModel:
       type: object
       description: Details of a language model
@@ -207,6 +197,16 @@ components:
         version:
           type: string
           description: Version of the model.
+    ListLanguageModelsResponse:
+      type: object
+      required:
+      - models
+      properties:
+        models:
+          type: array
+          items:
+            $ref: '#/components/schemas/LanguageModel'
+          description: Array of available language models.
   securitySchemes:
     bearerAuth:
       type: http

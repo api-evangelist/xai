@@ -59,16 +59,6 @@ paths:
       - bearerAuth: []
 components:
   schemas:
-    TokenizeResponse:
-      type: object
-      required:
-      - token_ids
-      properties:
-        token_ids:
-          type: array
-          items:
-            $ref: '#/components/schemas/TokenizeResponseToken'
-          description: A list of tokens.
     TokenizeResponseToken:
       type: object
       required:
@@ -105,6 +95,16 @@ components:
           - string
           - 'null'
           description: Optional user identifier.
+    TokenizeResponse:
+      type: object
+      required:
+      - token_ids
+      properties:
+        token_ids:
+          type: array
+          items:
+            $ref: '#/components/schemas/TokenizeResponseToken'
+          description: A list of tokens.
   securitySchemes:
     bearerAuth:
       type: http
