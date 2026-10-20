@@ -1,0 +1,93 @@
+{
+  "endpoint": "https://docs.x.ai/api/mcp",
+  "captured": "2026-10-20",
+  "method": "initialize + tools/list (anonymous, no tool called; roadmap#992)",
+  "protocol_version": "2025-06-18",
+  "server_info": {
+    "name": "xai-docs-mcp",
+    "version": "1.0.0"
+  },
+  "result": {
+    "tools": [
+      {
+        "name": "list_doc_pages",
+        "title": "List All Docs Pages",
+        "description": "List all available documentation page slugs. Returns an array of slug paths that can be used with get_doc_page.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {}
+        },
+        "execution": {
+          "taskSupport": "forbidden"
+        }
+      },
+      {
+        "name": "get_doc_page",
+        "description": "Get the markdown content of a specific documentation page by its slug path (e.g., \"developers/quickstart\", \"developers/models\").",
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "slug": {
+              "type": "string",
+              "description": "The doc page slug, e.g. \"developers/quickstart\""
+            },
+            "language": {
+              "description": "Programming language(s) for code examples, comma-separated (e.g. \"python\", \"javascript\", \"curl\"). Add an SDK subtag to pin one SDK (\"python-xai\", \"python-openai\", \"javascript-ai-sdk\", \"javascript-openai\"). Only matching variants of multi-language examples are returned; omit for all languages.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "slug"
+          ]
+        },
+        "execution": {
+          "taskSupport": "forbidden"
+        }
+      },
+      {
+        "name": "search_docs",
+        "description": "Search across all SpaceXSI documentation pages for a keyword or phrase. Returns matching page slugs with relevant excerpts.",
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "query": {
+              "type": "string",
+              "description": "The search keyword or phrase"
+            },
+            "max_results": {
+              "description": "Maximum number of results to return (default: 5)",
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 20
+            }
+          },
+          "required": [
+            "query"
+          ]
+        },
+        "execution": {
+          "taskSupport": "forbidden"
+        }
+      },
+      {
+        "name": "get_llms_txt",
+        "description": "Get the full llms.txt content — all SpaceXSI documentation pages concatenated into a single text file. This is a large payload; prefer get_doc_page for specific pages, or pass `language` to drop code examples in other languages.",
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "language": {
+              "description": "Programming language(s) for code examples, comma-separated (e.g. \"python\", \"javascript\", \"curl\"). Only matching variants of multi-language examples are returned; omit for all languages. SDK subtags are honoured at language granularity here (e.g. \"python-openai\" returns every Python variant) — use get_doc_page to pin one SDK.",
+              "type": "string"
+            }
+          }
+        },
+        "execution": {
+          "taskSupport": "forbidden"
+        }
+      }
+    ]
+  }
+}
