@@ -347,24 +347,6 @@ edges:
       P856 not contradicting (Kin 2026-10-20 decision 2)
   detected_by: sweep-github-marketplace.py
   first_seen: '2026-10-21'
-- partner_name: Vercel (own)
-  partner: vercel
-  partner_match: mirror
-  mirror_match: domain
-  type: marketplace
-  relationship: platform-app
-  direction: third-party
-  channel: partner-built
-  marketplace: own
-  evidence: https://vercel.com/marketplace/xai
-  mirror_of: vercel/integrations/vercel-integration-edges.yml
-  apps:
-  - xAI
-  listing_count: 1
-  detected: '2026-10-22'
-  detected_by: mirror-platform-listings.py
-  category: AI
-  partner_tier: native
 - partner_name: Obsidian
   partner: obsidian
   partner_match: aggregator
@@ -404,6 +386,45 @@ edges:
   apps:
   - NanoBanana PRO
   - Grok Notes
+- partner_name: Vercel (own)
+  partner: vercel
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://vercel.com/marketplace/xai
+  mirror_of: vercel/integrations/vercel-integration-edges.yml
+  apps:
+  - xAI
+  listing_count: 1
+  detected: '2026-10-22'
+  detected_by: mirror-platform-listings.py
+  category: AI
+  partner_tier: native
+- partner_name: Hugging Face (hugging-face-hub)
+  partner: hugging-face
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: hugging-face-hub
+  evidence: https://huggingface.co/xai-org
+  mirror_of: hugging-face/integrations/hugging-face-integration-edges.yml
+  apps:
+  - xai-org/RealworldQA
+  - xai-org/grok-2
+  - xai-org/grok-1
+  listing_count: 2
+  detected: '2026-10-23'
+  detected_by: mirror-platform-listings.py
+  category: Hugging Face Hub datasets
+  badges:
+  - Verified publisher (Hugging Face verified organisation)
 generated: '2026-10-13'
 method: searched
 checked:
@@ -449,6 +470,7 @@ checked:
 - https://raw.githubusercontent.com/<repo>/HEAD/manifest.json
 - https://raw.githubusercontent.com/obsidianmd/obsidian-releases/793b52114f54b055b760ef47761ec5c93d689804/community-plugin-stats.json
 - https://raw.githubusercontent.com/obsidianmd/obsidian-releases/793b52114f54b055b760ef47761ec5c93d689804/community-plugins.json
+- hugging-face/integrations/hugging-face-integration-edges.yml
 source:
 - https://github.com/PipedreamHQ/pipedream/tree/94800dd6de6640b942c65ea7ee655f71ac56d438/components/
 - https://zapier.com/api/v4/apps/
