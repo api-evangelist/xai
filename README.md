@@ -1,4 +1,4 @@
-# xAI (xai)
+# xAI
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,197 +66,164 @@
 
 xAI is an AI research lab founded by Elon Musk. The xAI API exposes Grok foundation models for chat, function calling, vision, voice, image generation, and video generation, alongside research outputs from the Colossus training supercluster.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/xai/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/xai/refs/heads/main/apis.yml)
+**Areas:** Artificial Intelligence · LLM · Foundation Models · Grok · Generative AI · Real-Time · Image Generation · Video Generation
 
-## Tags
+## xAI on APIs.io
 
-- AI
-- LLM
-- Foundation Models
-- Grok
-- Generative AI
+Everything profiled for xAI is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/xai/](https://apis.io/providers/xai/)** — or go straight to one of the APIs or properties below.
 
-## Timestamps
+### APIs (17)
 
-- **Created:** 2026-05-08
-- **Modified:** 2026-05-29
+- [xAI Api Key API](https://apis.io/apis/xai/xai-api-key-api/) — The Api Key API from xAI — 1 operation(s) for api key.
+- [xAI Chat API](https://apis.io/apis/xai/xai-chat-api/) — The Chat API from xAI — 2 operation(s) for chat.
+- [xAI Complete API](https://apis.io/apis/xai/xai-complete-api/) — The Complete API from xAI — 1 operation(s) for complete.
+- [xAI Completions API](https://apis.io/apis/xai/xai-completions-api/) — The Completions API from xAI — 1 operation(s) for completions.
+- [xAI Documents API](https://apis.io/apis/xai/xai-documents-api/) — The Documents API from xAI — 1 operation(s) for documents.
+- [xAI Embedding Models API](https://apis.io/apis/xai/xai-embedding-models-api/) — The Embedding Models API from xAI — 2 operation(s) for embedding models.
+- [xAI Embeddings API](https://apis.io/apis/xai/xai-embeddings-api/) — The Embeddings API from xAI — 1 operation(s) for embeddings.
+- [xAI Files API](https://apis.io/apis/xai/xai-files-api/) — The Files API from xAI — 3 operation(s) for files.
+- [xAI Image Generation Models API](https://apis.io/apis/xai/xai-image-generation-models-api/) — The Image Generation Models API from xAI — 2 operation(s) for image generation models.
+- [xAI Images API](https://apis.io/apis/xai/xai-images-api/) — The Images API from xAI — 2 operation(s) for images.
+- [xAI Language Models API](https://apis.io/apis/xai/xai-language-models-api/) — The Language Models API from xAI — 2 operation(s) for language models.
+- [xAI Messages API](https://apis.io/apis/xai/xai-messages-api/) — The Messages API from xAI — 1 operation(s) for messages.
+- [xAI Models API](https://apis.io/apis/xai/xai-models-api/) — The Models API from xAI — 2 operation(s) for models.
+- [xAI Responses API](https://apis.io/apis/xai/xai-responses-api/) — The Responses API from xAI — 2 operation(s) for responses.
+- [xAI Tokenize Text API](https://apis.io/apis/xai/xai-tokenize-text-api/) — The Tokenize Text API from xAI — 1 operation(s) for tokenize text.
+- [xAI Video Generation Models API](https://apis.io/apis/xai/xai-video-generation-models-api/) — The Video Generation Models API from xAI — 2 operation(s) for video generation models.
+- [xAI Videos API](https://apis.io/apis/xai/xai-videos-api/) — The Videos API from xAI — 4 operation(s) for videos.
 
-## APIs
+### Published properties
 
-### xAI Chat Completions API
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-Generates conversational completions using Grok foundation models, including multi-turn conversations, function calling, structured outputs, and reasoning. OpenAI-compatible Chat Completions interface.
+#### AsyncAPI (1)
 
-- **Human URL:** [https://docs.x.ai/docs/api-reference](https://docs.x.ai/docs/api-reference)
-- **Base URL:** `https://api.x.ai/v1`
+Event-driven and webhook contracts.
 
-#### Tags
+- [xAI Realtime WebSocket APIs](https://apis.io/asyncapis/xai/xai-asyncapi/)
 
-- Chat
-- Completions
-- LLM
-- Grok
+#### Event channels (5)
 
-#### Properties
+Individual events and webhooks the provider emits.
 
-- [Documentation](https://docs.x.ai/docs/overview)
-- [API Reference](https://docs.x.ai/docs/api-reference#chat-completions)
-- [OpenAPI](openapi/xai-openapi.json) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/xai.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/xai.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [realtime/client](https://apis.io/channels/xai/realtime-client/)
+- [realtime/server](https://apis.io/channels/xai/realtime-server/)
+- [stt/audio](https://apis.io/channels/xai/stt-audio/)
+- [stt/control](https://apis.io/channels/xai/stt-control/)
+- [stt/events](https://apis.io/channels/xai/stt-events/)
 
-### xAI Responses API
+#### MCP servers (1)
 
-The Responses API supports text generation, multi-turn conversations, reasoning, tool/function calling, and built-in tools (Live Search, code execution).
+Model Context Protocol servers that expose the API to agents.
 
-- **Human URL:** [https://docs.x.ai/docs/api-reference](https://docs.x.ai/docs/api-reference)
-- **Base URL:** `https://api.x.ai/v1`
+- [xai](https://apis.io/servers/xai/xai/)
 
-#### Tags
+#### Agentic access (1)
 
-- Responses
-- LLM
-- Grok
-- Reasoning
+Which operations an agent can call, which act, and which need a human in the loop.
 
-#### Properties
+- [Xai Agentic Access](https://apis.io/agentic-access/xai/xai-agentic-access/)
 
-- [Documentation](https://docs.x.ai/docs/api-reference#responses)
-- [OpenAPI](openapi/xai-openapi.json) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/xai.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/xai.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+#### Collections (2)
 
-### xAI Images API
+Postman and Open Collection request collections.
 
-Generates images from text prompts using the Grok Imagine image models. OpenAI-compatible image generation endpoint.
+- [xAI's REST API](https://apis.io/collections/xai/open-xai/)
+- [xAI's REST v1 API](https://apis.io/collections/xai/open-xai-v1-api/)
 
-- **Human URL:** [https://docs.x.ai/docs/api-reference](https://docs.x.ai/docs/api-reference)
-- **Base URL:** `https://api.x.ai/v1`
+#### Governance rules (1)
 
-#### Tags
+Spectral rulesets for the provider's contracts.
 
-- Images
-- Generation
-- Multimodal
+- [xAI — asyncapi rules](https://apis.io/rules/xai/xai-asyncapi-spectral-rules/)
 
-#### Properties
+#### Security (4)
 
-- [Documentation](https://docs.x.ai/docs/guides/image-generations)
-- [API Reference](https://docs.x.ai/docs/api-reference#image-generations)
-- [OpenAPI](openapi/xai-openapi.json) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/xai.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/xai.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Authentication, trust centre, and vulnerability disclosure.
 
-### xAI Video Generation API
+- [Xai Authentication](https://apis.io/security/xai/xai-authentication/)
+- [Xai Domain Security](https://apis.io/security/xai/xai-domain-security/)
+- [Xai Trust Center](https://apis.io/security/xai/xai-trust-center/)
+- [Xai Vulnerability Disclosure](https://apis.io/security/xai/xai-vulnerability-disclosure/)
 
-Generates video from text or image inputs using the Grok Imagine video models, with editing and detailed control options.
+#### Plans and pricing (1)
 
-- **Human URL:** [https://docs.x.ai/docs/api-reference](https://docs.x.ai/docs/api-reference)
-- **Base URL:** `https://api.x.ai/v1`
+Published plans, tiers and prices.
 
-#### Tags
+- [Xai Plans Pricing](https://apis.io/plans/xai/xai-plans-pricing/)
 
-- Video
-- Generation
-- Multimodal
+#### Rate limits (1)
 
-#### Properties
+Published request limits.
 
-- [Documentation](https://docs.x.ai/docs/guides/video-generation)
-- [OpenAPI](openapi/xai-openapi.json) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/xai.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/xai.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Xai Rate Limits](https://apis.io/rate-limits/xai/xai-rate-limits/)
 
-### xAI Voice API
+#### FinOps (1)
 
-Realtime voice API supporting speech-to-text, text-to-speech, and bidirectional realtime voice interaction with Grok.
+What the API costs to run, by operation.
 
-- **Human URL:** [https://docs.x.ai/docs/api-reference](https://docs.x.ai/docs/api-reference)
-- **Base URL:** `https://api.x.ai/v1`
+- [Xai Finops](https://apis.io/finops/xai/xai-finops/)
 
-#### Tags
+## Where to find this API
 
-- Voice
-- Speech
-- Audio
-- Realtime
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
-#### Properties
-
-- [Documentation](https://docs.x.ai/docs/guides/voice)
-- [OpenAPI](openapi/xai-openapi.json) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/xai.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/xai.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [AsyncAPI](asyncapi/xai-asyncapi.yml) — [AsyncAPI Specification](https://www.asyncapi.com/docs/reference/specification/latest)
-
-### xAI Embeddings API
-
-Generates vector embeddings of text and other inputs for retrieval, classification, and semantic search workflows.
-
-- **Human URL:** [https://docs.x.ai/docs/api-reference](https://docs.x.ai/docs/api-reference)
-- **Base URL:** `https://api.x.ai/v1`
-
-#### Tags
-
-- Embeddings
-- Vector
-
-#### Properties
-
-- [Documentation](https://docs.x.ai/docs/guides/embeddings)
-- [OpenAPI](openapi/xai-openapi.json) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/xai.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/xai.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### xAI Models API
-
-Lists available Grok models, model capabilities, context windows, and metadata.
-
-- **Human URL:** [https://docs.x.ai/docs/api-reference](https://docs.x.ai/docs/api-reference)
-- **Base URL:** `https://api.x.ai/v1`
-
-#### Tags
-
-- Models
-- Catalog
-
-#### Properties
-
-- [Documentation](https://docs.x.ai/docs/api-reference#models)
-- [OpenAPI](openapi/xai-openapi.json) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/xai.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/xai.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### xAI Batch API
-
-Submits offline batch jobs of chat or embedding requests at a discount (20-50% off standard rates), with results returned out-of-band. Batch requests do not count toward rate limits.
-
-- **Human URL:** [https://docs.x.ai/docs/api-reference](https://docs.x.ai/docs/api-reference)
-- **Base URL:** `https://api.x.ai/v1`
-
-#### Tags
-
-- Batch
-- Async
-
-#### Properties
-
-- [Documentation](https://docs.x.ai/docs/guides/batch)
-- [OpenAPI](openapi/xai-openapi.json) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/xai.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/xai.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-## Common Properties
-
-- [GitHub Organization](https://github.com/xai-org)
-- [LinkedIn](https://www.linkedin.com/company/x-ai)
 - [Website](https://x.ai/)
 - [Documentation](https://docs.x.ai/)
-- [Plans](plans/xai-plans-pricing.yml)
-- [Rate Limits](rate-limits/xai-rate-limits.yml)
-- [Fin Ops](finops/xai-finops.yml)
+- [Blog](https://x.ai/news)
+- [GitHub](https://github.com/xai-org)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 32.8** — thin · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 68.3 |
+| Contract quality | 51.2 |
+| Contract governance | 11.4 |
+| Operational transparency | 21.1 |
+| Developer ergonomics | 31.0 |
+| Access clarity | 15.8 |
+
+**Agent readiness 34.6** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | verified |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | derived (partial credit) |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | partial |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 20.9** — AI & Biometrics
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/xai/](https://apis.io/providers/xai/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for xAI: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/xai/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
